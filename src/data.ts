@@ -12,7 +12,7 @@ export const PORTFOLIO_DATA = {
       titleKey: 'frontEndTitle', badgeKey: 'badgeBeginner',
       items: [
         { href: './Store-E-Commerce/index.html', className: 'level-green', image: 'https://img.freepik.com/premium-psd/dark-smartphone-mockup-design_772836-647.jpg', titleKey: 'storeTitle', descKey: 'storeDesc', levelKey: 'req25' },
-        { href: './gameXO/index.html', className: 'level-green', image: 'https://img.tapimg.net/market/images/959908226f4925523b68f0e2035e0d87.png?imageView2/0/h/270/format/jpg/interlace/1/ignore-error/1/t/1', titleKey: 'xoTitle', descKey: 'xoDesc', levelKey: 'req60' },
+        { href: './gameX&O/index.html', className: 'level-green', image: 'https://img.tapimg.net/market/images/959908226f4925523b68f0e2035e0d87.png?imageView2/0/h/270/format/jpg/interlace/1/ignore-error/1/t/1', titleKey: 'xoTitle', descKey: 'xoDesc', levelKey: 'req60' },
         { href: './imageGallery/index.html', className: 'level-green', image: 'https://play-lh.googleusercontent.com/eAXNQ-MW9GgvDEGnaxwL9xEoxBYkfqou3nu-RPBMIo0N47wgMDervpSFWmsCa0WrvYY=w600-h300-pc0xffffff-pd', titleKey: 'galleryTitle', descKey: 'galleryDesc', levelKey: 'req70' },
         { href: './time/index.html', className: 'level-green', image: 'https://tse1.mm.bing.net/th?id=OIP.aev3AAxwxk04v44Rt80QcgHaEL&rs=1&pid=ImgDetMain&o=7&rm=3', titleKey: 'timeTitle', descKey: 'timeDesc', levelKey: 'req75' }
       ]
@@ -29,7 +29,7 @@ export const PORTFOLIO_DATA = {
     {
       titleKey: 'fullStackTitle', badgeKey: 'badgeAdvanced',
       items: [
-        { href: 'https://helloapp.ct.ws/log/loginpage.html', className: 'level-red', image: 'sadsa.JPG', titleKey: 'helloTitle', descKey: 'helloDesc', levelKey: 'req250', external: true },
+        { href: 'https://helloapp.ct.ws', className: 'level-red', image: 'sadsa.JPG', titleKey: 'helloTitle', descKey: 'helloDesc', levelKey: 'req250', external: true },
         { href: 'https://unknown-p.netlify.app', className: 'level-red', image: 'https://www.marketingmedian.com/wp-content/uploads/2024/08/linkedin-formatting-post-e1723557833704.jpg', titleKey: 'unknownTitle', descKey: 'unknownDesc', levelKey: 'req220', external: true },
         { href: 'https://my-property-1.netlify.app', className: 'level-red', image: 'https://solutions-time.com/wp-content/uploads/2021/05/salse-anlystis.jpg', titleKey: 'propertyTitle', descKey: 'propertyDesc', levelKey: 'req300', external: true }
       ]
