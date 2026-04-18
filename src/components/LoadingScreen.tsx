@@ -95,7 +95,7 @@ export function LoadingScreen({
       <div className="fixed inset-0 bg-black flex items-center justify-center">
 <button
   onClick={() => {
-    const audio = new Audio('/sound.mp3');
+    const audio = new Audio('./sound.mp3');
     audio.volume = 1;
     audio.play().catch(() => {});
 

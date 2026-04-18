@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساباتي الاجتماعية</title>
+    <style> 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* تأثير النجوم المتحركة */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(20, 20, 40, 0.9);
+            border: 2px solid #00ff41;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .terminal-text {
+            color: #00ff41;
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #00ff41;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link-card {
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.1), rgba(0, 150, 255, 0.1));
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 12px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .link-card:hover::before {
+            left: 100%;
+        }
+
+        .link-card:hover {
+            transform: translateX(-5px);
+            border-color: #00ff41;
+            box-shadow: 0 5px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); }
+        .instagram { background: linear-gradient(135deg, #E4405F, #833AB4); }
+        .youtube { background: linear-gradient(135deg, #FF0000, #CC0000); }
+        .facebook { background: linear-gradient(135deg, #1877F2, #0D5DBE); }
+
+        .link-info {
+            flex: 1;
+        }
+
+        .platform-name {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .username {
+            color: #00ff41;
+            font-size: 13px;
+        }
+
+        .arrow {
+            color: #00ff41;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .link-card:hover .arrow {
+            transform: translateX(-5px);
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .code-line {
+            color: #00ff41;
+            opacity: 0.7;
+            margin: 5px 0;
+        }
+        .icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <div class="container">
+        <div class="header">
+            <div class="terminal-text">> root@social-links:~$<span class="cursor"></span></div>
+            <h1>Ahmed-Awm</h1>
+            <p class="subtitle">مطور برمجيات | مبدع محتوى</p>
+        </div>
+
+        <div class="links-container">
+            <a href="https://wa.me/+201007948964" target="_blank" class="link-card">
+               <div class="icon whatsapp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</div>
+                <div class="link-info">
+                    <div class="platform-name">WhatsApp</div>
+                    <div class="username">@ahmed...</div>
+                </div>
+                <div class="arrow">←</div>
+            </a>
+
+            <a href="https://www.instagram.com/ahmed_q9k/" target="_blank" class="link-card">
+                <div class="icon instagram">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
+</div>
+                <div class="link-info">
+                    <div class="platform-name">Instagram</div>
+                    <div class="username">@ahmed_q9k</div>
+                </div>
+                <div class="arrow">←</div>
+            </a>
+
+            <a href="https://www.youtube.com/@Ahmed-m7k9j" target="_blank" class="link-card">
+                <div class="icon youtube">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
+</div>
+                <div class="link-info">
+                    <div class="platform-name">YouTube</div>
+                    <div class="username">@Ahmed-m7k9j</div>
+                </div>
+                <div class="arrow">←</div>
+            </a>
+
+            <a href="https://www.facebook.com/ahmedmahmoud.825580/" target="_blank" class="link-card">
+               <div class="icon facebook">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+</div>
+                <div class="link-info">
+                    <div class="platform-name">Facebook</div>
+                    <div class="username">@ahmedmahmoud.825580</div>
+                </div>
+                <div class="arrow">←</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <div class="code-line">// Built with passion</div>
+            <div class="code-line">console.log("تابعني!");</div>
+        </div>
+    </div>
+
+    <script>
+        // إنشاء النجوم المتحركة
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // تأثير صوتي عند الضغط
+        document.querySelectorAll('.link-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateX(-5px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateX(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
