@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Games</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600&display=swap');
+
+:root {
+  --bg:      #07070f;
+  --card:    rgba(255,255,255,0.035);
+  --border:  rgba(120,90,255,0.2);
+  --borderH: rgba(160,130,255,0.5);
+  --accent:  #9b7eff;
+  --adim:    rgba(120,90,255,0.2);
+  --text:    #e2daff;
+  --muted:   rgba(180,160,255,0.5);
+}
+
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  min-height: 100vh;
+}
+
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(100,80,255,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(100,80,255,.04) 1px,transparent 1px);
+  background-size:52px 52px;
+  animation: gridMove 20s linear infinite;
+  pointer-events:none; z-index:0;
+}
+@keyframes gridMove { to { background-position:52px 52px; } }
+
+.blob {
+  position:fixed; border-radius:50%;
+  filter:blur(100px); pointer-events:none; z-index:0; opacity:.25;
+}
+.blob1 { width:500px;height:500px;background:#230d6e;top:-180px;left:-150px; }
+.blob2 { width:380px;height:380px;background:#10004a;bottom:-100px;right:-100px; }
+
+main { position:relative; z-index:1; max-width:1140px; margin:0 auto; padding:0 1.5rem 5rem; }
+
+header {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(26px,5vw,46px);
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #fff;
+  line-height: 1;
+}
+.logo em { color: var(--accent); font-style:normal; }
+.logo-sub { font-size:12px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-top:5px; }
+
+.hdr-count { font-family:'Orbitron',monospace; font-size:13px; color:var(--muted); letter-spacing:1px; text-align:left; }
+.hdr-count b { color:var(--accent); font-size:22px; display:block; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px,1fr));
+  gap: 1.75rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+  animation: fadeUp .55s ease both;
+}
+.card:hover {
+  border-color: var(--borderH);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(100,80,255,0.12);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.thumb-wrap { position:relative; }
+
+.thumb {
+  width:100%; aspect-ratio:16/9;
+  object-fit:cover; display:block;
+  background:#0c0c20;
+}
+
+.no-img {
+  width:100%; aspect-ratio:16/9;
+  background:linear-gradient(135deg,#0d0b20,#14123a);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:8px; position:relative; overflow:hidden;
+}
+.no-img::before {
+  content:''; position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(120,100,255,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(120,100,255,.07) 1px,transparent 1px);
+  background-size:22px 22px;
+}
+.no-img-emoji { font-size:46px; position:relative; }
+.no-img-label { font-family:'Orbitron',monospace; font-size:10px; letter-spacing:2px; color:rgba(180,160,255,.3); text-transform:uppercase; position:relative; }
+
+.genre-badge {
+  position:absolute; bottom:10px; left:10px;
+  padding:3px 11px; border-radius:20px;
+  font-size:11px; font-weight:700;
+  letter-spacing:.5px; text-transform:uppercase;
+  border:1px solid; backdrop-filter:blur(8px);
+}
+.platform-badge {
+  position:absolute; top:10px; right:10px;
+  padding:3px 10px; border-radius:6px;
+  font-size:10px; font-weight:700; letter-spacing:1px;
+  background:rgba(10,10,20,0.7);
+  border:1px solid rgba(255,255,255,0.1);
+  color:rgba(200,180,255,0.7);
+  backdrop-filter:blur(6px);
+}
+
+.card-body { padding:1.1rem 1.3rem; flex:1; display:flex; flex-direction:column; gap:.55rem; }
+
+.card-title {
+  font-family:'Orbitron',monospace;
+  font-size:14px; font-weight:700; color:#fff; letter-spacing:.5px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+
+.card-desc { font-size:13px; color:var(--muted); line-height:1.65; flex:1; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+.tags { display:flex; gap:5px; flex-wrap:wrap; }
+.tag { padding:2px 9px; border-radius:4px; font-size:11px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); color:rgba(200,180,255,0.45); }
+
+.card-meta { display:flex; align-items:center; justify-content:space-between; padding-top:.5rem; border-top:1px solid rgba(255,255,255,0.05); }
+.status { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; }
+.sdot { width:7px;height:7px;border-radius:50%; }
+.card-size { font-family:'Orbitron',monospace; font-size:10px; color:rgba(180,160,255,0.3); letter-spacing:.5px; }
+
+.dl-btn {
+  display:flex; align-items:center; justify-content:center;
+  gap:9px; width:100%; padding:12px 0; margin-top:.4rem;
+  background:var(--adim);
+  border:1px solid rgba(130,100,255,0.45);
+  border-radius:11px; color:#c8b4ff;
+  font-family:'Orbitron',monospace;
+  font-size:11px; font-weight:700; letter-spacing:1.5px;
+  cursor:pointer; text-decoration:none;
+  transition:all .25s; position:relative; overflow:hidden;
+}
+.dl-btn::before {
+  content:''; position:absolute; inset:0;
+  background:rgba(160,136,255,0.1);
+  transform:scaleX(0); transform-origin:left; transition:transform .3s;
+}
+.dl-btn:hover::before { transform:scaleX(1); }
+.dl-btn:hover { border-color:var(--accent); color:#fff; }
+.dl-icon { width:17px;height:17px;flex-shrink:0; }
+
+footer { text-align:center; padding-top:3rem; font-size:11px; letter-spacing:2px; color:rgba(180,160,255,0.15); position:relative; z-index:1; }
+
+@media(max-width:480px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<main>
+  <header>
+    <div>
+      <div class="logo"><em>MY</em> GAMES</div>
+      <div class="logo-sub">Desktop Games Portfolio</div>
+    </div>
+    <div class="hdr-count"><b id="cnt">0</b>لعبة متاحة</div>
+  </header>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>DESKTOP GAMES &nbsp;·&nbsp; 2025</footer>
+
+<script>
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║  ✏️  أضف ألعابك هنا — كل لعبة object واحد                  ║
+   ╠══════════════════════════════════════════════════════════════╣
+   ║  title  → اسم اللعبة                                        ║
+   ║  desc   → وصف قصير                                          ║
+   ║  genre  → Action | Puzzle | RPG | Horror | Racing | ...     ║
+   ║  status → released | beta | wip | paused                    ║
+   ║  emoji  → يظهر لو مفيش صورة                                 ║
+   ║  image  → مسار الصورة من نفس المجلد، أو "" لو مفيش          ║
+   ║  zip    → مسار ملف ZIP للتحميل                              ║
+   ║  size   → حجم الملف للعرض (اختياري)                         ║
+   ║  tags   → مصفوفة كلمات مفتاحية (اختياري)                   ║
+   ╚══════════════════════════════════════════════════════════════╝
+
+   هيكل المجلدات المقترح:
+   📁 موقعك/
+    ├── index.html
+    ├── images/
+    │    ├── void-runner.png
+    │    └── cube-mind.jpg
+    └── files/
+         ├── void-runner.zip
+         └── cube-mind.zip
+*/
+
+const GAMES = [
+  {
+    title:  'Fast ball',
+    desc:   'لعبة الكره السريعه',
+    genre:  'Action',
+    status: 'released',
+    emoji:  '',
+    image:  '/Untitled.png',
+    zip:    '/FAST-ball.zip',
+    size:   '28.6 MB',
+    tags:   ['Single Player', 'Windows'],
+  },
+];
+
+/* ══════════════════════════════════════════════════════════════ */
+
+const GENRE_STYLE = {
+  Action:     { bg:'rgba(220,60,60,.22)',  br:'rgba(220,60,60,.5)',  cl:'#ff9090' },
+  Puzzle:     { bg:'rgba(60,140,255,.2)',  br:'rgba(60,140,255,.5)', cl:'#80c4ff' },
+  RPG:        { bg:'rgba(155,80,255,.2)',  br:'rgba(155,80,255,.5)', cl:'#cc90ff' },
+  Platformer: { bg:'rgba(60,210,140,.2)', br:'rgba(60,210,140,.5)', cl:'#60e0b0' },
+  Strategy:   { bg:'rgba(255,180,50,.2)', br:'rgba(255,180,50,.5)', cl:'#ffc860' },
+  Horror:     { bg:'rgba(100,30,160,.3)', br:'rgba(120,50,180,.5)', cl:'#c080ff' },
+  Racing:     { bg:'rgba(255,110,30,.2)', br:'rgba(255,110,30,.5)', cl:'#ff9060' },
+  Simulation: { bg:'rgba(40,200,220,.18)',br:'rgba(40,200,220,.5)', cl:'#60d8f0' },
+  Adventure:  { bg:'rgba(90,190,70,.2)',  br:'rgba(90,190,70,.5)',  cl:'#90e070' },
+};
+
+const STATUS_MAP = {
+  released: { label:'Released',    color:'#60e0a0', dot:'#60e0a0' },
+  beta:     { label:'Beta',        color:'#ffd060', dot:'#ffd060' },
+  wip:      { label:'In Progress', color:'#80c4ff', dot:'#80c4ff' },
+  paused:   { label:'Paused',      color:'rgba(180,160,255,.4)', dot:'rgba(180,160,255,.4)' },
+};
+
+function buildCard(g, i) {
+  const gs = GENRE_STYLE[g.genre] || GENRE_STYLE['Action'];
+  const st = STATUS_MAP[g.status] || STATUS_MAP['released'];
+
+  const thumb = g.image
+    ? `<img class="thumb" src="${g.image}" alt="${g.title}" loading="lazy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+       <div class="no-img" style="display:none">
+         <span class="no-img-emoji">${g.emoji||'🎮'}</span>
+         <span class="no-img-label">No Preview</span>
+       </div>`
+    : `<div class="no-img">
+         <span class="no-img-emoji">${g.emoji||'🎮'}</span>
+         <span class="no-img-label">No Preview</span>
+       </div>`;
+
+  const tagsHtml = (g.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('');
+
+  return `
+  <div class="card" style="animation-delay:${(i*.08).toFixed(2)}s">
+    <div class="thumb-wrap">
+      ${thumb}
+      <span class="genre-badge" style="background:${gs.bg};border-color:${gs.br};color:${gs.cl}">${g.genre}</span>
+      <span class="platform-badge">🖥 Desktop</span>
+    </div>
+    <div class="card-body">
+      <div class="card-title">${g.title}</div>
+      <div class="card-desc">${g.desc}</div>
+      ${tagsHtml?`<div class="tags">${tagsHtml}</div>`:''}
+      <div class="card-meta">
+        <span class="status" style="color:${st.color}">
+          <span class="sdot" style="background:${st.dot}"></span>${st.label}
+        </span>
+        ${g.size?`<span class="card-size">${g.size}</span>`:''}
+      </div>
+      <a class="dl-btn" href="${g.zip}" download>
+        <svg class="dl-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3v13M7 11l5 5 5-5"/><path d="M5 21h14"/>
+        </svg>
+        تحميل اللعبة
+      </a>
+    </div>
+  </div>`;
+}
+
+document.getElementById('grid').innerHTML = GAMES.map(buildCard).join('');
+document.getElementById('cnt').textContent = GAMES.length;
+</script>
+</body>
+</html>
