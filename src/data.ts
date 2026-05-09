@@ -1,7 +1,7 @@
 export const PORTFOLIO_DATA = {
   level: { current: 999, max: 1000, totalBlocks: 50 },
   skills: [
-    { key: 'htmlSkill', level: 96 },
+    { key: 'htmlSkill', level: 97 },
     { key: 'pythonSkill', level: 83 },
     { key: 'mysqlSkill', level: 80 },
     { key: 'aiToolsSkill', level: 86 },
