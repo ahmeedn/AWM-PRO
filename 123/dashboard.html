@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - نظام إدارة المستأجرين</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    direction: rtl;
+}
+
+/* Login Page */
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.login-box h1 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.login-box h2 {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.login-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Dashboard Container */
+.container {
+    max-width: 1330px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    color: #667eea;
+    font-size: 28px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.username {
+    color: #666;
+    font-weight: 500;
+}
+
+/* Summary Section */
+.summary-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.summary-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.summary-card h3 {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.summary-card .amount {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.summary-card small {
+    color: #999;
+    font-size: 14px;
+}
+
+.summary-card.income .amount {
+    color: #10b981;
+}
+
+.summary-card.expense .amount {
+    color: #ef4444;
+}
+
+.summary-card.net .amount {
+    color: #667eea;
+}
+
+/* Actions Bar */
+.actions-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px 25px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.tab-btn:hover:not(.active) {
+    background: #f8f9fa;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #6b7280;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-warning {
+    background: #f59e0b;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.btn-warning:hover {
+    background: #d97706;
+}
+
+/* Table */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f8f9fa;
+}
+
+th {
+    padding: 15px;
+    text-align: right;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    padding: 25px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    color: #333;
+    font-size: 22px;
+}
+
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #333;
+}
+
+.modal-content form {
+    padding: 25px;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 25px;
+}
+
+/* Error Message */
+.error-message {
+    display: none;
+    padding: 12px;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-right: 4px solid #dc2626;
+}
+
+/* Success Message */
+.success-message {
+    display: none;
+    padding: 12px;
+    background: #d1fae5;
+    color: #059669;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-right: 4px solid #059669;
+}
+
+/* Login Footer */
+.login-footer {
+    margin-top: 20px;
+    text-align: center;
+    padding-top: 15px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.login-footer p {
+    color: #666;
+    font-size: 14px;
+}
+
+.login-footer a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+th, td {
+    padding: 12px 16px;
+    text-align: center;
+}
+
+tbody tr {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tbody tr:hover {
+    background: #f9fafb;
+}
+
+.btn-edit {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-delete , .btn-deleteD{
+    background: #dc2626;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.loader {
+  display: inline-block;
+  width: 60px;          /* كبرت الدائرة */
+  height: 60px;         /* كبرت الدائرة */
+  border: 5px solid #ccc; /* سمك الحدود */
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content.report-modal {
+  background-color: #fdfdfd;
+  margin: 3% auto;
+  padding: 25px;
+  border-radius: 15px;
+  width: 95%;
+  max-width: 900px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #004085;
+  font-size: 24px;
+  text-align: center;
+  border-bottom: 2px solid #004085;
+  padding-bottom: 10px;
+}
+
+.modal-body h4 {
+  color: #007bff;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #007bff;
+  padding-bottom: 5px;
+}
+
+.modal-body p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.modal-body small {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.modal-body .card {
+  background: #f8f9fa;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 5px solid #007bff;
+}
+
+.modal-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.modal-body table th, 
+.modal-body table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.modal-body table th {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.modal-body table tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+.modal-body table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.modal-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+/* حاوية البحث */
+#searchContainer {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* قائمة اختيار نوع البحث */
+#searchType {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #d1d5db;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+#searchType:focus {
+    border-color: #6366f1;
+}
+
+/* مربع إدخال البحث */
+#searchInput {
+    padding: 10px 14px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1.5px solid #d1d5db;
+    flex: 1;
+    min-width: 150px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+#searchInput:focus {
+    border-color: #6366f1;
+}
+
+/* أزرار الحالة */
+#statusButtons {
+    display: flex; /* يتم التحكم بالعرض عبر JS */
+    gap: 5px;
+}
+.status-btn {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+}
+.status-btn[data-value="مدفوع"] {
+    background-color: #10b981;
+}
+.status-btn[data-value="غير مدفوع"] {
+    background-color: #ef4444;
+}
+.status-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* زر مسح البحث */
+#clearSearch {
+    background-color: #6b7280;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+#clearSearch:hover {
+    background-color: #4b5563;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #searchContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    #searchType, #searchInput, #statusButtons, #clearSearch {
+        width: 100%;
+    }
+}
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
+}
+#screenshotBtn:disabled {
+    background-color: #ccc; /* لون رمادي */
+    cursor: not-allowed;    /* مؤشر ما يقدر يضغط */
+    opacity: 0.6;           /* تخفيف اللون شوية */
+    pointer-events: none;    /* يمنع أي تفاعل */
+}
+
+.status.paid {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status.unpaid {
+    background: #fee2e2;
+    color: #991b1b;
+}
+.status.paid { color: green; font-weight: bold; }
+.status.unpaid { color: red; font-weight: bold; }
+
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); }
+.modal-content { background: #fff; width: 400px; margin: 10% auto; border-radius: 8px; padding: 15px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; }
+.close { cursor: pointer; font-size: 22px; }
+#totalall{color: #96a700;}
+#totalundone{color: red;}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .summary-section {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>نظام إدارة المستأجرين</h1>
+            <div class="header-actions">
+                <span class="username">مرحباً، {{ session.username }}</span>
+                <button id="logout"  class="btn btn-secondary">تسجيل الخروج</button>
+            </div>
+        </header>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <div class="summary-card income">
+                <h3>إجمالي كل الايجارات المدفوع وغير المدفوع</h3>
+                <p class="amount" id="totalall">0.00 جنيه</p>
+                <small id="tenantsCount">0 مستأجر</small>
+            </div>
+            <div class="summary-card income">
+                <h3>إجمالي  الايجارات <span style="color: rgb(3, 133, 3);">المدفوعة</span></h3>
+                <p class="amount" id="totalIncome">0.00 جنيه</p>
+                <small id="tenantsCountdone">0 مستأجر</small>
+            </div>
+              <div class="summary-card income">
+                <h3>إجمالي  الايجارات <br><span style="color: rgb(201, 0, 0);">الغير مدفوعة</span></h3>
+                <p class="amount" id="totalundone">0.00 جنيه</p>
+                 <small id="tenantsCountundone">0 مستأجر</small>
+            </div>
+            <div class="summary-card expense">
+                <h3>ما تم خصمو من إجمالي الايجارات المدفوعه</h3>
+                <p class="amount" id="totalDiscounts">0.00 جنيه</p>
+                <small id="discountsCount">0 خصم</small>
+            </div>
+           <div class="summary-card net">
+    <h3>الصافي</h3>
+    <p class="amount" id="netTotal">
+        <span class="loader"></span> <!-- اللودنج -->
+    </p>
+</div>
+
+        </div>
+
+        <div class="actions-bar">
+<button id="screenshotBtn" class="btn btn-success">📸 التقاط صورة للتقرير</button>
+<button id="downloadCSV" style="margin: 10px;" class="btn btn-success">تحميل word</button>
+
+<div id="detailsModal" class="modal">
+  <div class="modal-content report-modal">
+    <div class="modal-header">
+      <h3>تقرير الإيرادات والخصومات</h3>
+    </div>
+    <div class="modal-body" id="detailsContent"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary close">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+        </div>
+
+        <!-- Tabs -->
+       <div class="tabs">
+    <button class="tab-btn active" data-tab="tenants">المستأجرين</button>
+    <button class="tab-btn" data-tab="discounts">الخصومات</button>
+</div>
+<div style="display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap;align-items:center">
+
+<select id="searchType">
+<option value="name">الاسم</option>
+<option value="date">التاريخ</option>
+<option value="amount">المبلغ</option>
+<option value="status">الحالة</option>
+</select>
+
+<input type="text" id="searchInput" placeholder="اكتب للبحث">
+
+<div id="statusButtons" style="display:none;gap:5px;">
+<button class="btn btn-success status-btn" data-value="مدفوع">مدفوع</button>
+<button class="btn btn-danger status-btn" data-value="غير مدفوع">غير مدفوع</button>
+</div>
+
+<button id="clearSearch" class="btn btn-secondary">مسح</button>
+
+</div>
+<!-- المستأجرين -->
+<div id="tenants" class="tab-content active">
+    <div class="section-header">
+        <h2>إدارة المستأجرين</h2>
+        <button id="addTenantBtn" class="btn btn-primary">+ إضافة مستأجر</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>المبلغ (جنيه)</th>
+                    <th>التاريخ</th>
+                    <th>الحالة</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="tenantsTable"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- الخصومات -->
+<div id="discounts" class="tab-content" style="display:none;">
+    <div class="section-header">
+        <h2>إدارة الخصومات</h2>
+        <button id="addDiscountBtn" class="btn btn-primary">+ إضافة خصم</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>المبلغ (جنيه)</th>
+                    <th>التاريخ</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="discountsTable"></tbody>
+        </table>
+    </div>
+</div>
+<div id="rentModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>تعديل الإيجار</h3>
+    </div>
+
+    <form id="rentForm">
+      <input type="hidden" id="rentId">
+
+      <div class="form-group">
+        <label>اسم المستأجر</label>
+        <input type="text" id="rentName" required>
+      </div>
+
+      <div class="form-group">
+        <label>المبلغ</label>
+        <input type="number" id="rentAmount" required>
+      </div>
+
+      <div class="form-group">
+        <label>التاريخ</label>
+        <input type="date" id="rentDate" required>
+      </div>
+
+      <div class="form-group">
+        <label>الحالة</label>
+        <select id="rentStatus">
+          <option value="paid">مدفوع</option>
+          <option value="unpaid">غير مدفوع</option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close="rentModal">إلغاء</button>
+        <button type="submit" class="btn btn-primary">حفظ</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+    <!-- Modal for Add/Edit Tenant -->
+    <div id="tenantModal" class="modal">
+        
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="tenantModalTitle">إضافة مستأجر</h3>
+        </div>
+
+        <form id="tenantForm">
+            <input type="hidden" id="tenantId">
+
+            <div class="form-group">
+                <label for="tenantName">اسم المستأجر</label>
+                <input type="text" id="tenantName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tenantAmount">المبلغ (جنيه)</label>
+                <input type="number" id="tenantAmount" step="0.01" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tenantDate">التاريخ</label>
+                <input type="date" id="tenantDate" required >
+            </div>
+
+            <div class="form-group">
+                <label for="tenantStatus">الحالة</label>
+                <select id="tenantStatus" required>
+                    <option value="paid">مدفوع</option>
+                    <option value="unpaid">غير مدفوع</option>
+                </select>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-close="tenantModal">إلغاء</button>
+                <button type="submit" class="btn btn-primary">حفظ</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <!-- Modal for Add/Edit Discount -->
+    <div id="modal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">إضافة</h3>
+        </div>
+        <form id="modalForm">
+            <input type="hidden" id="modalType">
+            <input type="hidden" id="itemId">
+            <div class="form-group">
+                <label for="itemName">الاسم</label>
+                <input type="text" id="itemName" required>
+            </div>
+            <div class="form-group">
+                <label for="itemAmount">المبلغ (جنيه)</label>
+                <input type="number" id="itemAmount" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="itemDate">التاريخ</label>
+                <input type="date" id="itemDate" required >
+            </div>
+          
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close">إلغاء</button>
+                <button type="submit" class="btn btn-primary">حفظ</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+    <script >const tabButtons = document.querySelectorAll(".tab-btn");
+const tabContents = document.querySelectorAll(".tab-content");
+document.getElementById("screenshotBtn").disabled = true;
+
+tabButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+        const target = btn.dataset.tab; // tenants أو discounts
+        loadDiscounts()
+        // إزالة active من كل الأزرار والمحتويات
+        tabButtons.forEach(b => b.classList.remove("active"));
+        tabContents.forEach(c => c.style.display = "none");
+
+        // تفعيل الزر والمحتوى المستهدف
+        btn.classList.add("active");
+        document.getElementById(target).style.display = "block";
+    });
+});
+function relood(){
+    setTimeout(() => {
+    document.querySelector('[data-tab="discounts"]').click();
+setTimeout(() => {
+    document.querySelector('[data-tab="tenants"]').click();
+}, 10);
+}, 20);
+}
+setTimeout(() => {
+    document.querySelector('[data-tab="discounts"]').click();
+setTimeout(() => {
+    document.querySelector('[data-tab="tenants"]').click();
+}, 10);
+}, 20);
+
+const api = 'https://asss.pythonanywhere.com'
+
+let username = document.querySelector(".username");
+let logout = document.querySelector("#logout");
+const user = JSON.parse(localStorage.getItem("token"));
+const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+tenantDate.value = today
+let allP = 0
+let total = 0;
+let undone = 0;
+let alltotal = 0;
+let lendone = 0;
+let lenundone = 0;
+let Totaldis = 0;
+async function loadItems() {
+    try {
+        const res = await fetch(`${api}/items`, {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + user.token
+            }
+        });
+        const data = await res.json();
+
+        tenantsTable.innerHTML = ""; // امسح الرسالة المؤقتة
+
+        data.forEach(item => {
+            const statusText = item[3] === "paid" ? "مدفوع" : "غير مدفوع";
+            const statusClass = item[3] === "paid" ? "paid" : "unpaid";
+
+            alltotal += item[2]
+
+            if(item[3] == 'paid'){
+                total += item[2]
+                lendone += 1
+            }else{
+undone += item[2]
+lenundone += 1
+
+            }
+
+
+            const row = document.createElement("tr");
+            row.dataset.id = item[0]
+            row.innerHTML = `
+                <td>${item[1]}</td>
+                <td>${item[2]}</td>
+                <td>${item[4].split("T")[0]}</td>
+                <td><span class="status ${statusClass}">${statusText}</span></td>
+                <td>
+                    <button class="btn-edit">تعديل</button>
+                    <button class="btn-delete">حذف</button>
+                </td>
+            `;
+            tenantsTable.appendChild(row);
+
+        });
+        allP = data.length
+all(alltotal,data.length)
+plus(total,lendone)
+unplus(undone,lenundone)
+    } catch (err) {
+        console.error(err);
+        window.location.href = "./index.html"
+    }
+}
+loadItems()
+
+username.textContent = `مرحباً، ${JSON.parse(localStorage.getItem("name"))}`
+
+let clickCount = 0; // عداد الضغطات
+
+const addTenantBtn = document.getElementById("addTenantBtn");
+const tenantModal = document.getElementById("tenantModal");
+const closeBtns = document.querySelectorAll("[data-close]");
+const form = document.getElementById("tenantForm");
+const tenantsTable = document.getElementById("tenantsTable");
+const colse = document.querySelector(".close");
+
+// فتح الـ Modal وزيادة العداد
+addTenantBtn.onclick = function() {
+
+    tenantModal.style.display = "block";
+};
+
+// إغلاق الـ Modal
+
+    colse.onclick = () => tenantModal.style.display = "none";
+
+
+// إغلاق عند الضغط خارج الـ Modal
+window.onclick = (e) => {
+    if(e.target === tenantModal) tenantModal.style.display = "none";
+};
+closeBtns.forEach(btn => {
+    btn.onclick = () => tenantModal.style.display = "none";
+});
+
+// إضافة مستأجر عند حفظ الفورم
+form.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("tenantName").value;
+    const amount = document.getElementById("tenantAmount").value;
+    const status = document.getElementById("tenantStatus").value;
+    const date = document.getElementById("tenantDate").value;
+
+    const state = status === "paid" ? "paid" : "unpaid";
+
+    try {
+        const res = await fetch(`${api}/items`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + user.token
+            },
+            body: JSON.stringify({
+                name: name,
+                price: amount,
+                state: state,
+                created_at: date
+            })
+        });
+
+        const data = await res.json();
+window.location.reload()
+        if (!res.ok) {
+            alert(data.error || "حدث خطأ عند الإضافة");
+            return;
+        }
+
+        // data يجب أن يحتوي على id الجديد
+        const id = data.id; // تأكد من أن السيرفر يرجع {id: ...}
+
+        // إنشاء الصف مباشرة
+        const statusText = state === "paid" ? "مدفوع" : "غير مدفوع";
+        const statusClass = state === "paid" ? "paid" : "unpaid";
+
+        const row = document.createElement("tr");
+        row.dataset.id = id;
+        row.innerHTML = `
+            <td>${name}</td>
+            <td>${amount}</td>
+            <td>${date}</td>
+            <td><span class="status ${statusClass}">${statusText}</span></td>
+            <td>
+                <button class="btn-edit">تعديل</button>
+                <button class="btn-delete">حذف</button>
+            </td>
+        `;
+        tenantsTable.appendChild(row);
+
+        form.reset();
+        tenantModal.style.display = "none";
+        relood()
+    } catch (err) {
+        console.error(err);
+        alert("حدث خطأ في الاتصال بالسيرفر");
+    }
+};
+
+function plus(done,len){
+totalIncome.textContent = `${done.toLocaleString()} جنيه`
+tenantsCountdone.textContent = `${len.toLocaleString()} مستأجر`
+
+
+}
+
+function unplus(done,len){
+totalundone.textContent = `${done.toLocaleString()} جنيه`
+tenantsCountundone.textContent = `${len.toLocaleString()} مستأجر`
+
+
+}
+function all(done,len){
+totalall.textContent = `${done.toLocaleString()} جنيه`
+tenantsCount.textContent = `${len.toLocaleString()} مستأجر`
+
+
+}
+logout.onclick = function(){
+    localStorage.removeItem("name")
+    localStorage.removeItem("token")
+    window.location.reload()
+}
+
+
+const modal = document.getElementById("modal");
+const modalForm = document.getElementById("modalForm");
+const itemName = document.getElementById("itemName");
+const itemAmount = document.getElementById("itemAmount");
+const itemDate = document.getElementById("itemDate")
+
+const discountsTable = document.getElementById("discountsTable");
+const addDiscountBtn = document.getElementById("addDiscountBtn");
+
+// فتح المودل وضبط تاريخ اليوم
+addDiscountBtn.onclick = () => {
+    modal.style.display = "block";
+    itemDate.value = new Date().toISOString().split("T")[0]; 
+   
+    modalForm.reset();
+    document.querySelectorAll(".close").forEach(btn => btn.onclick = () => modal.style.display = "none");
+};
+document.querySelectorAll(".close").forEach(btn => btn.onclick = () => modal.style.display = "none");
+// حفظ الخصم وإرساله للـ backend
+modalForm.onsubmit = async (e) => {
+    
+    e.preventDefault();
+
+    const name = itemName.value;
+    const amount = itemAmount.value;
+    const date = itemDate.value;
+
+    try {
+        const res = await fetch(`${api}/discounts`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + user.token
+            },
+            body: JSON.stringify({ name, price: amount, created_at: date })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "حدث خطأ أثناء الإضافة");
+
+        const row = document.createElement("tr");
+        row.dataset.id = data.id; // <--- مهم جدًا
+        row.innerHTML = `
+            <td>${name}</td>
+            <td>${amount}</td>
+            <td>${date}</td>
+            <td>
+                <button class="btn-deleteD">حذف</button>
+            </td>
+        `;
+        discountsTable.appendChild(row);
+
+        modal.style.display = "none";
+        modalForm.reset();
+
+relood()
+    } catch (err) {
+        console.error(err);
+        alert(err.message);
+    }
+};
+
+// إغلاق المودل عند الضغط على زر الإغلاق أو خارج المودل
+
+window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+
+// حذف أي صف عند الضغط على زر الحذف
+document.addEventListener("click", async (e) => {
+    if (!e.target.classList.contains("btn-deleteD")) return;
+  if (!confirm(`هل أنت متأكد من حذف الخصم "${e.target.parentElement.parentElement.firstElementChild.textContent}"؟`)) return;
+    const row = e.target.closest("tr");
+    const id = row.dataset.id; // مهم جدًا
+
+   
+
+
+    try {
+        const res = await fetch(`${api}/discounts/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + user.token
+            }
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+
+            relood()
+            row.remove(); // امسح من الواجهة بعد نجاح الحذف
+        } else {
+            alert(data.message || "فشل الحذف");
+        }
+
+    } catch (err) {
+        console.error(err);
+        alert("خطأ في الاتصال بالسيرفر");
+    }
+});
+ 
+async function loadDiscounts() {
+    
+    let totalds = 0;
+        let totaldsC = 0
+    try {
+        const res = await fetch(`${api}/discounts`, {
+            headers: {
+                "Authorization": "Bearer " + user.token
+            }
+        });
+
+        const data = await res.json();
+        discountsTable.innerHTML = "";
+
+      
+        data.forEach(item => {
+            totalds += item[2];
+            totaldsC += 1
+
+            const row = document.createElement("tr");
+            row.dataset.id = item[0];
+            row.innerHTML = `
+                <td>${item[1]}</td>
+                <td>${item[2]}</td>
+                <td>${item[3].split("T")[0]}</td>
+                <td>
+                    <button class="btn-deleteD">حذف</button>
+                </td>
+            `;
+            discountsTable.appendChild(row);
+        });
+        setTimeout(() => {
+   
+
+    const number1 = totalds
+    const number2 = total
+    let finalll = number2 - number1
+    
+const formatted = finalll.toLocaleString(); 
+netTotal.textContent = `${formatted} جنيه`
+document.getElementById("screenshotBtn").disabled = false;
+}, 1000);
+totalDiscounts.textContent = `${totalds.toLocaleString()} جنيه`
+discountsCount.textContent = `${totaldsC.toLocaleString()} خصم`
+
+
+    } catch (err) {
+        console.error(err);
+        window.location.href = "./index.html";
+    }
+}
+const screenshotBtn = document.getElementById("screenshotBtn");
+const detailsModal = document.getElementById("detailsModal");
+const detailsContent = document.getElementById("detailsContent");
+
+// استخراج الرقم بدون فواصل
+function parseNumber(text) {
+    return Number(text.replace(/[^0-9.-]+/g,""));
+}
+
+// تنسيق الرقم مع الفواصل
+function formatNumber(num) {
+    return num.toLocaleString();
+}
+
+screenshotBtn.onclick = () => {
+    const totalAll = document.getElementById("totalall").textContent;
+    const totalIncome = document.getElementById("totalIncome").textContent;
+    const totalUndone = document.getElementById("totalundone").textContent;
+    const totalDiscounts = document.getElementById("totalDiscounts").textContent;
+    const netTotal = document.getElementById("netTotal").textContent;
+
+    const tenantsCount = document.getElementById("tenantsCount").textContent;
+    const tenantsCountDone = document.getElementById("tenantsCountdone").textContent;
+    const tenantsCountUndone = document.getElementById("tenantsCountundone").textContent;
+    const discountsCount = document.getElementById("discountsCount").textContent;
+
+    detailsContent.innerHTML = `
+        <div class="card">
+            <h4>ملخص الإيرادات</h4>
+            <p><strong>إجمالي كل الإيرادات:</strong> ${totalAll}</p>
+            <small>${tenantsCount}</small>
+            <p><strong>الإيرادات المدفوعة:</strong> ${totalIncome}</p>
+            <small style="color: green;">${tenantsCountDone}</small>
+            <p><strong>الإيرادات الغير مدفوعة:</strong> ${totalUndone}</p>
+            <small style="color: red;">${tenantsCountUndone}</small>
+        </div>
+
+        <div class="card">
+            <h4>الخصومات</h4>
+            <p><strong>إجمالي الخصومات:</strong> ${totalDiscounts}</p>
+            <small>${discountsCount}</small>
+        </div>
+
+        <div class="card">
+            <h4>الصافي</h4>
+            <p><strong>الصافي:</strong> ${netTotal}</p>
+        </div>
+    `;
+
+    detailsModal.style.display = "block";
+};
+
+// إغلاق المودال
+document.querySelectorAll(".close").forEach(btn => {
+    btn.onclick = () => detailsModal.style.display = "none";
+});
+window.onclick = (e) => {
+    if (e.target === detailsModal) detailsModal.style.display = "none";
+};
+const rentModal = document.getElementById("rentModal");
+const rentForm  = document.getElementById("rentForm");
+
+document.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("btn-edit")) return;
+
+    const row = e.target.closest("tr");
+
+    document.getElementById("rentId").value     = row.dataset.id;
+    document.getElementById("rentName").value   = row.children[0].textContent;
+    document.getElementById("rentAmount").value = row.children[1].textContent;
+    document.getElementById("rentDate").value   = row.children[2].textContent;
+    document.getElementById("rentStatus").value =
+        row.children[3].textContent.trim() === "مدفوع" ? "paid" : "unpaid";
+
+    rentModal.style.display = "block";
+});
+rentForm.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const id = document.getElementById("rentId").value;
+
+    const body = {
+        name: document.getElementById("rentName").value,
+        price: Number(document.getElementById("rentAmount").value),
+        state: document.getElementById("rentStatus").value,
+        created_at: document.getElementById("rentDate").value
+    };
+
+    try {
+        const res = await fetch(`${api}/items/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + user.token
+            },
+            body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        // تحديث الصف في الجدول
+        const row = document.querySelector(`tr[data-id="${id}"]`);
+        row.children[0].textContent = body.name;
+        row.children[1].textContent = body.price;
+        row.children[2].textContent = body.created_at;
+        row.children[3].innerHTML = `
+            <span class="status ${body.state === "paid" ? "paid" : "unpaid"}">
+                ${body.state === "paid" ? "مدفوع" : "غير مدفوع"}
+            </span>
+        `;
+
+        rentModal.style.display = "none";
+        rentForm.reset();
+        window.location.reload()
+
+    } catch (err) {
+        console.error(err);
+        alert("فشل تعديل الإيجار");
+    }
+};
+document.querySelectorAll("[data-close='rentModal']").forEach(btn => {
+    btn.onclick = () => rentModal.style.display = "none";
+});
+
+window.onclick = (e) => {
+    if (e.target === rentModal) rentModal.style.display = "none";
+};
+document.addEventListener("click", async (e) => {
+    if (!e.target.classList.contains("btn-delete")) return;
+
+    const row = e.target.closest("tr");
+    const id = row.dataset.id;
+
+    if (!confirm("هل أنت متأكد من الحذف؟")) return;
+
+    try {
+        const res = await fetch(`${api}/items/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Authorization": "Bearer " + user.token
+            }
+        });
+
+        if (!res.ok) throw new Error("Delete failed");
+
+        row.remove();
+        window.location.reload()
+    } catch (err) {
+        console.error(err);
+        alert("فشل الحذف");
+    }
+});
+<!-- ------------------------ -->
+const searchType = document.getElementById("searchType");
+const searchInput = document.getElementById("searchInput");
+const statusButtons = document.getElementById("statusButtons");
+const statusBtns = document.querySelectorAll(".status-btn");
+const clearSearch = document.getElementById("clearSearch");
+
+// عند تغيير نوع البحث
+searchType.addEventListener("change", () => {
+    if(searchType.value === "status"){
+        searchInput.style.display = "none";
+        statusButtons.style.display = "flex";
+        searchInput.value = ""; // مسح البحث النصي
+        runSearch(""); // إعادة إظهار كل الصفوف
+    } else {
+        searchInput.style.display = "block";
+        statusButtons.style.display = "none";
+        searchInput.value = "";
+        runSearch(""); // إعادة إظهار كل الصفوف
+    }
+});
+
+// فلترة حسب الحالة
+statusBtns.forEach(btn => {
+    btn.onclick = () => {
+        const value = btn.dataset.value.toLowerCase(); // "مدفوع" أو "غير مدفوع"
+        const tenantRows = document.querySelectorAll("#tenantsTable tr");
+
+        tenantRows.forEach(row => {
+            const statusCell = row.children[3]; // عمود الحالة (تأكد إنه رقم العمود صح)
+            if (statusCell) {
+                const statusText = statusCell.innerText.toLowerCase();
+                row.style.display = statusText === value ? "" : "none";
+            }
+        });
+
+        searchInput.value = ""; // مسح أي بحث نصي
+    };
+});
+
+// البحث النصي
+searchInput.addEventListener("input", () => {
+    const value = searchInput.value.toLowerCase();
+    runSearch(value);
+});
+
+// زر مسح البحث/الحالة
+clearSearch.addEventListener("click", () => {
+    searchInput.value = "";
+    searchType.value = "name";
+    searchInput.style.display = "block";
+    statusButtons.style.display = "none";
+    runSearch("");
+});
+
+// دالة الفلترة العامة
+function runSearch(value) {
+    const tenantRows = document.querySelectorAll("#tenantsTable tr");
+    tenantRows.forEach(row => {
+        if (!value) {
+            row.style.display = ""; // عرض كل الصفوف إذا ما في قيمة
+        } else {
+            const rowText = row.innerText.toLowerCase();
+            row.style.display = rowText.includes(value) ? "" : "none";
+        }
+    });
+}
+// ------------------ csv  ---------------
+const downloadBtn = document.getElementById("downloadCSV");
+
+downloadBtn.addEventListener("click", () => {
+    // جمع البيانات
+    const totalAll = document.getElementById("totalall").textContent;
+    const totalIncome = document.getElementById("totalIncome").textContent;
+    const totalUndone = document.getElementById("totalundone").textContent;
+    const totalDiscounts = document.getElementById("totalDiscounts").textContent;
+    const netTotal = document.getElementById("netTotal").textContent;
+
+    const tenantsCount = document.getElementById("tenantsCount").textContent;
+    const tenantsCountDone = document.getElementById("tenantsCountdone").textContent;
+    const tenantsCountUndone = document.getElementById("tenantsCountundone").textContent;
+    const discountsCount = document.getElementById("discountsCount").textContent;
+
+    // جدول المستأجرين
+    let tenantsHTML = `<table border="1" style="border-collapse: collapse; width: 100%;">
+        <tr>
+            <th>الاسم</th>
+            <th>المبلغ</th>
+            <th>التاريخ</th>
+            <th>الحالة</th>
+        </tr>`;
+    document.querySelectorAll("#tenantsTable tr").forEach(row => {
+        tenantsHTML += `<tr>
+            <td>${row.cells[0].textContent}</td>
+            <td>${row.cells[1].textContent}</td>
+            <td>${row.cells[2].textContent}</td>
+            <td>${row.cells[3].textContent}</td>
+        </tr>`;
+    });
+    tenantsHTML += "</table>";
+
+    // جدول الخصومات
+    let discountsHTML = `<table border="1" style="border-collapse: collapse; width: 100%; margin-top:10px;">
+        <tr>
+            <th>الاسم</th>
+            <th>المبلغ</th>
+            <th>التاريخ</th>
+        </tr>`;
+    document.querySelectorAll("#discountsTable tr").forEach(row => {
+        discountsHTML += `<tr>
+            <td>${row.cells[0].textContent}</td>
+            <td>${row.cells[1].textContent}</td>
+            <td>${row.cells[2].textContent}</td>
+        </tr>`;
+    });
+    discountsHTML += "</table>";
+
+    // محتوى الـ Word
+    const htmlContent = `
+        <h1>تقرير المستأجرين والخصومات</h1>
+        <p>إجمالي كل الايجارات: <b>${totalAll}</b></p>
+        <p>إجمالي المدفوع: <b>${totalIncome}</b></p>
+        <p>إجمالي الغير مدفوع: <b>${totalUndone}</b></p>
+        <p>إجمالي الخصومات: <b>${totalDiscounts}</b></p>
+        <p>الصافي: <b>${netTotal}</b></p>
+        <p>عدد المستأجرين: <b>${tenantsCount}</b> | مدفوع: <b>${tenantsCountDone}</b> | غير مدفوع: <b>${tenantsCountUndone}</b></p>
+        <p>عدد الخصومات: <b>${discountsCount}</b></p>
+        <h2>تفاصيل المستأجرين</h2>
+        ${tenantsHTML}
+        <h2>تفاصيل الخصومات</h2>
+        ${discountsHTML}
+    `;
+
+    // تحويل المحتوى لملف Word
+    const blob = new Blob(["\ufeff", htmlContent], {
+        type: "application/msword"
+    });
+    saveAs(blob, "تقرير_المستأجرين.doc");
+});
+</script>
+</body>
+</html>

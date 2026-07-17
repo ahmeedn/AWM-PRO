@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sing-in</title>
+    <style>
+              * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #333;
+        }
+        .main {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 300px;
+        }
+        input {
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+        .btn {
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            background: #2575fc;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn:hover {
+            background: #145bd3;
+            transform: scale(1.03);
+        }
+        a {
+            text-align: center;
+            color: #2575fc;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #145bd3;
+        }
+        
+    </style>
+</head>
+<body>
+<div class="main">
+  <h1><span style="color: blue;">C</span>reate <span style="color: blue;">A</span>ccount</h1>
+
+ <div id="message" style="display:none; padding:10px; border-radius:6px; text-align:center;"></div> <input class="name" minlength="5" maxlength="11" type="text" placeholder="name"> <input class="pass" type="text" placeholder="password">
+
+  <button class="btn">Sign Up</button>
+
+    <p class="link">
+    Already have an account?
+    <a href="./index.html">Log in</a>
+  </p>
+</div>
+
+    <script>
+    
+        let name = document.querySelector(".name");
+        let pass = document.querySelector(".pass");
+        let btn = document.querySelector(".btn");
+        let messageDiv = document.getElementById("message");
+
+       
+function showMessage(text, type="error") {
+    messageDiv.style.display = "block";
+    messageDiv.textContent = text;
+    messageDiv.style.background = type === "error" ? "#f8d7da" : "#d4edda";
+    messageDiv.style.color = type === "error" ? "#721c24" : "#155724";
+    messageDiv.style.border = type === "error" ? "1px solid #f5c6cb" : "1px solid #c3e6cb";
+
+    // يختفي بعد 3 ثواني
+    setTimeout(() => {
+        messageDiv.style.display = "none";
+    }, 5000);
+}
+
+
+        btn.onclick = function(){
+     
+        if(name.value.length < 5 || name.value.length > 11){
+        showMessage("Name must be between 6 and 11 characters", "error");
+        return; 
+    }
+            
+
+                    fetch("https://asss.pythonanywhere.com/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                {"name":name.value,"password":pass.value}
+            )
+            
+        }).then(res => res.json())
+.then(data => {
+    console.log(data.error)
+
+              if(data.error){
+            showMessage(data.error, "error");
+        } else {
+            showMessage(data.message || "Logged in successfully!", "success");
+              sessionStorage.setItem("acont", JSON.stringify({
+  name: name.value,
+  pas: pass.value
+}));
+            window.location.href ='./index1.html'
+        }
+ 
+    
+}).catch(err => console.error(err));
+     
+        }
+        
+    </script>
+</body>
+</html>
