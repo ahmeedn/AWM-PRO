@@ -1,0 +1,1 @@
+import{t as l,k as r,b as d,T as c}from"./index-C-NAaxdN.js";const n=async(a,o,t,e,i)=>{if(a)try{await l(r(d,"audit_logs"),{userId:a.id,userName:a.name,userRole:a.role,action:o,entityType:t,entityId:e,details:i,timestamp:c.now()})}catch(s){console.error("Audit log failed",s)}};export{n as l};

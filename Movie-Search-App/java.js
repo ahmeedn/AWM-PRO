@@ -7,7 +7,7 @@ let btn = document.querySelector(".btn");
 let awm = document.querySelector(".awm");
 awm.onclick = function(){
 
-    window.open("./index.html", "_self")
+    window.open("./index.html", "_blank")
 }
 
 

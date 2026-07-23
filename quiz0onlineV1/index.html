@@ -1,0 +1,3057 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع الاختبار الشامل</title>
+    <style>
+      #showTextBtn{
+ position: fixed;
+    bottom: 150px;
+    right: 15px;
+    padding: 10px 14px;
+    border-radius: 20%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    background: #111;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,.4);
+      }
+      .profile-box {
+    background: linear-gradient(135deg, #ca5c5c, #9b22c0);
+    padding:3px 6px;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    max-width: 240px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.22);
+}
+
+.profile-box p:first-child {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.profile-box p:last-child {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #darkModeToggle{
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 14px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    background: #111;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,.4);
+}
+#pdf{
+  position: fixed;
+    bottom: 80px;
+    right: 15px;
+    padding: 10px 14px;
+    border-radius: 20%;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    background: #111;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(0,0,0,.4);
+}
+.rankings-popup {
+    display: none;
+    position: fixed;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        scale: 0.6;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 5px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    z-index: 1000;
+    min-width: 200px;
+}
+
+.popup-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.popup-item:hover {
+    background: #222;
+}
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 30px;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        /* Scrollbar Styling */
+        .container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        .container::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: clamp(24px, 5vw, 32px);
+            margin-bottom: 10px;
+        }
+
+        .welcome-screen, .quiz-screen, .results-screen {
+            display: none;
+        }
+
+        .welcome-screen.active, .quiz-screen.active, .results-screen.active {
+            display: block;
+        }
+
+        .input-group {
+            margin: 30px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: clamp(14px, 3vw, 16px);
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: clamp(15px, 3vw, 18px);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: clamp(12px, 2.5vw, 14px);
+        }
+
+        .question-text {
+            font-size: clamp(16px, 3.5vw, 20px);
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            font-size: clamp(14px, 3vw, 16px);
+            word-break: break-word;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .option.wrong {
+            border-color: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .answer-indicator {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .option input[type="radio"] {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            flex: 1;
+        }
+
+        .btn-primary {
+            flex: 1;
+        }
+
+        .score-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score-card h2 {
+            font-size: clamp(32px, 8vw, 48px);
+            margin: 20px 0;
+        }
+
+        .score-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .score-detail {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .score-detail .number {
+            font-size: clamp(24px, 5vw, 32px);
+            font-weight: bold;
+        }
+
+        .leaderboard {
+            margin-top: 30px;
+        }
+
+        .leaderboard h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: clamp(18px, 4vw, 24px);
+        }
+.aaa{
+        flex: 1;
+    min-width: 140px;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    background: white;
+    border-radius: 10px;
+    font-size: clamp(14px, 3vw, 16px);
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.welcome-score-badges{
+      
+    color: white;
+    padding: 8px 15px;
+    
+    font-weight: bold;
+  
+} 
+ .aaa.active-set {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        .leaderboard-item {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .leaderboard-item.current-user {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+        }
+
+        .welcome-leaderboard {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        #rankingsBtn {
+            right: 1px;
+            top: 1px;
+            position: fixed;
+    background: linear-gradient(135deg, #f5c542, #f39c12);
+    color: #000;
+    border: none;
+    padding: 4px 18px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s ease;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+}
+
+#rankingsBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+#rankingsBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+        .welcome-leaderboard::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .welcome-leaderboard::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .welcome-leaderboard::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+        }
+
+        .welcome-leaderboard h2 {
+            color: white;
+            text-align: center;
+            font-size: clamp(20px, 4vw, 28px);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .welcome-leaderboard-item {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 18px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-leaderboard-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .welcome-leaderboard-item:hover::before {
+            width: 100%;
+            opacity: 0.05;
+        }
+
+        .welcome-leaderboard-item:hover {
+            transform: translateX(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .welcome-leaderboard-item:nth-child(1) {
+            background: linear-gradient(135deg, rgba(185, 242, 255, 0.2), rgba(109, 213, 250, 0.15));
+            border: 2px solid rgba(109, 213, 250, 0.3);
+        }
+
+        .welcome-leaderboard-item:nth-child(2) {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 237, 78, 0.1));
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .welcome-leaderboard-item:nth-child(3) {
+            background: linear-gradient(135deg, rgba(192, 192, 192, 0.15), rgba(232, 232, 232, 0.1));
+            border: 2px solid rgba(192, 192, 192, 0.2);
+        }
+
+        .welcome-rank {
+            font-weight: bold;
+            font-size: clamp(20px, 4vw, 28px);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .welcome-rank.diamond {
+            background: linear-gradient(135deg, #b9f2ff, #6dd5fa, #2980b9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: diamond-shine 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(109, 213, 250, 0.6));
+        }
+
+        @keyframes diamond-shine {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(109, 213, 250, 0.6)); }
+            50% { filter: drop-shadow(0 0 20px rgba(185, 242, 255, 0.8)); }
+        }
+
+        .welcome-rank.gold {
+            background: linear-gradient(135deg, #ffd700, #ffed4e, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+        }
+
+        .welcome-rank.silver {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8, #d3d3d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 8px rgba(192, 192, 192, 0.5));
+        }
+
+        .welcome-rank:not(.gold):not(.silver):not(.bronze) {
+            color: #667eea;
+        }
+
+        .trophy-icon {
+            font-size: clamp(28px, 5vw, 40px);
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            animation: trophy-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes trophy-bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .welcome-leaderboard-item:nth-child(1) .trophy-icon {
+            animation: trophy-bounce 2s ease-in-out infinite, diamond-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes diamond-glow {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(109, 213, 250, 0.8)); }
+            50% { filter: drop-shadow(0 0 15px rgba(185, 242, 255, 1)); }
+        }
+
+        .welcome-user-info {
+            flex: 1;
+        }
+
+        .welcome-user-name {
+            font-size: clamp(14px, 3vw, 18px);
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .welcome-user-date {
+            font-size: clamp(11px, 2vw, 12px);
+            color: #000000;
+        }
+
+        .welcome-score-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: clamp(12px, 2.5vw, 16px);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+            white-space: nowrap;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e0e0e0, transparent);
+            margin: 30px 0;
+        }
+
+        .question-set-selection {
+            margin-bottom: 25px;
+        }
+
+        .question-set-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .question-set-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 10px;
+            font-size: clamp(14px, 3vw, 16px);
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-set-btn:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .question-set-btn.active-set {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+/* ================= DARK MODE ================= */
+body.dark-mode {
+    background: linear-gradient(135deg, #0f1025 0%, #070814 100%);
+    color: #eaeaff;
+}
+
+/* container */
+body.dark-mode .container {
+    background: #0f122e;
+    box-shadow: 0 20px 60px rgba(0,0,0,.7);
+}
+
+/* popup */
+body.dark-mode .rankings-popup {
+    background: linear-gradient(135deg, #1b1f4a, #0f122e);
+}
+
+/* cards */
+body.dark-mode .question-card,
+body.dark-mode .leaderboard-item,
+ body.dark-mode .question-text
+ {
+    background: #15183b;
+    color: #fff;
+}
+body.dark-mode label {
+    color: #eaeaff;
+}
+/* options */
+body.dark-mode .option {
+    background: #101330;
+    border-color: #2a2f66;
+    color: #eaeaff;
+}
+
+body.dark-mode .option:hover {
+    background: #1b1f4a;
+}
+
+body.dark-mode .option.selected {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+}
+
+/* inputs */
+body.dark-mode input {
+    background: #101330;
+    color: #fff;
+    border-color: #2a2f66;
+}
+
+/* headers */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3 {
+    color: #b9c1ff;
+}
+
+/* leaderboard welcome */
+body.dark-mode .welcome-leaderboard {
+    background: linear-gradient(135deg, #1b1f4a, #0f122e);
+}
+
+body.dark-mode .welcome-leaderboard-item {
+    background: rgba(20, 25, 70, 0.95);
+}
+
+/* text colors */
+body.dark-mode .welcome-user-name,
+body.dark-mode .welcome-user-date {
+    color: #fff;
+}
+
+/* scrollbars */
+body.dark-mode .container::-webkit-scrollbar-track {
+    background: #0f122e;
+}
+
+body.dark-mode .container::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* error */
+body.dark-mode .error {
+    background: #4a1f25;
+    color: #ffd6d6;
+    border-color: #7a2c35;
+}
+/* Correct answer - Dark Mode */
+body.dark-mode .option.correct {
+    background: rgba(40, 167, 69, 0.2);
+    border-color: #28a745;
+    color: #7dff9c;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.4);
+}
+
+/* Wrong answer - Dark Mode */
+body.dark-mode .option.wrong {
+    background: rgba(220, 53, 69, 0.2);
+    border-color: #dc3545;
+    color: #ff9aa5;
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.4);
+}
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .welcome-leaderboard {
+                padding: 15px;
+                max-height: 300px;
+            }
+
+            .welcome-leaderboard-item {
+                padding: 12px 15px;
+                gap: 10px;
+            }
+
+            .trophy-icon {
+                font-size: 28px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn-secondary, .btn-primary {
+                width: 100%;
+            }
+
+            .score-details {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .welcome-rank {
+                min-width: 35px;
+                font-size: 22px;
+            }
+
+            .welcome-score-badge {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .welcome-leaderboard {
+                padding: 12px;
+            }
+
+            .welcome-leaderboard-item {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+
+            .trophy-icon {
+                font-size: 24px;
+            }
+
+            .welcome-rank {
+                font-size: 18px;
+                min-width: 30px;
+            }
+
+            .question-card {
+                padding: 15px;
+            }
+
+            .option {
+                padding: 10px 12px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1000px;
+            }
+        }
+
+        .rank {
+            font-weight: bold;
+            color: #667eea;
+            font-size: clamp(16px, 3.5vw, 20px);
+            min-width: 35px;
+        }
+
+        .rank.gold { color: #ffd700; }
+        .rank.silver { color: #c0c0c0; }
+        .rank.bronze { color: #cd7f32; }
+
+        .user-info {
+            flex: 1;
+            margin: 0 15px;
+            min-width: 120px;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+
+        .score-badge {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: clamp(12px, 2.5vw, 14px);
+            white-space: nowrap;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <button id="darkModeToggle">🌙</button>
+  <button id="pdf">pdf</button>
+ <button id="showTextBtn" style="padding: 10px 20px; font-size: 16px; font-weight: bold; 
+               background-color: #007bff; color: white; border: none; 
+               border-radius: 5px; cursor: pointer;z-index: 1009;">مهم</button>
+
+
+
+<p id="importantText" style="    position: fixed;
+    bottom: 4%;
+    right: 10%;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 60vh;
+    display: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 1000;
+    line-height: 1.5;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+  <strong>مقدمة الإنتاج التلفزيوني والفيديو:</strong><br>
+  - الإنتاج التلفزيوني عملية إبداعية لتحويل الأفكار إلى صور وأصوات.<br>
+  - يتطلب خبرات متعددة: إدارة، هندسة، تصوير، ديكور، مونتاج، محاسبة.<br>
+  - مراحل الإنتاج: كتابة التصميم الإبداعي، التصوير، المونتاج، ما بعد الإنتاج، التسويق والدعاية.<br>
+  - الجمهور المستهدف والعناصر الأساسية للعمل مهمين.<br>
+  - البحث في الشخصية يشمل المحور الأسري والمجتمعي والمهني.<br><br>
+
+  <strong>التصوير والمونتاج:</strong><br>
+  - المونتاج الفوري Offline لا يتم أثناء التصوير.<br>
+  - Logging يعني مشاهدة ما تم تصويره قبل استبعاد اللقطات.<br>
+  - تصحيح الألوان جزء من مرحلة الإنتاج الفني وليس ما قبل الإنتاج.<br>
+  - الحركات الأساسية للكاميرا: Pedestal، Pan، Tilt، Dolly، Tracking.<br>
+  - الكاميرا المحمولة باليد تعطي حركة غير ثابتة.<br>
+  - الإضاءة الطبيعية والصناعية: النجوم والقمر = طبيعية، الاستوديو = صناعية.<br>
+  - القطع (Cut) هو انتقال مفاجئ، Wipe انتقال تدريجي.<br><br>
+
+  <strong>الاستوديو والديكور:</strong><br>
+  - استوديو الإنتاج أكبر من استوديو التنفيذ.<br>
+  - أرضية الاستوديو مسطحة وناعمة لتسهيل حركة الكاميرات.<br>
+  - ارتفاع السقف يؤثر على ديكور وزوايا التصوير.<br>
+  - مفتاح الكروما يستخدم لوضع صورة بدل الخلفية، لا للكتابة.<br>
+  - الاستوديوهات الافتراضية حل اقتصادي يقلل تكاليف الديكور.<br><br>
+
+  <strong>الصوت والمكساج:</strong><br>
+  - العزل الصوتي أصعب في التليفزيون منه في السينما.<br>
+  - الصوف الزجاجي يستخدم كمواد عزل صوتي.<br>
+  - المكساج = إضافة مؤثرات وموسيقى، الدوبلاج = تسجيل صوت جديد.<br><br>
+
+  <strong>التصميم التعليمي:</strong><br>
+  - تصميم البرامج التعليمية طريقة علمية منظمة لتحقيق أهداف تعليمية.<br>
+  - المراحل: تحديد الاحتياجات والأهداف، تطوير المحتوى، اختبار البرنامج، التفاعل والتعلم التعاوني.<br>
+  - أساليب تنظيم المحتوى: المنطقي، السيكولوجي، التوفيقي، الحلزوني، الربط الارتجاعي، الموضوعي، المنظومي.<br>
+  - الاستفادة من الرسوم التوضيحية "ستوري بورد" لتسهيل المونتاج.<br><br>
+
+  <strong>الفريق والأدوار:</strong><br>
+  - المنتج: يحدد ميزانية العمل.<br>
+  - المخرج: غرفة التحكم لاختيار اللقطات.<br>
+  - مساعد المخرج: تنسيق الممثلين، مهام إدارية.<br>
+  - مدير التصوير: مسؤول عن الإضاءة وتكوين الصورة.<br>
+  - فني المونتاج: توزيع اللقطات حسب الكاميرات.<br>
+  - المعد: مسؤول عن كل ما يُعرض على الشاشة.<br>
+  - الرجيسير: مسؤول عن الممثلين والكومبارس.<br>
+  - منسق المناظر: اختيار الإكسسوارات مع مهندس الديكور.<br>
+  - فني ذراع الميكروفون يحتاج قوة بدنية.<br><br>
+
+  <strong>أهم النقاط العامة:</strong><br>
+  - الفيديوهات الرقمية خارج المنزل تعرض في الأماكن العامة.<br>
+  - البساطة والجودة سمات الفيديوهات الخارجية.<br>
+  - البرامج الاستعراضية تحتاج مساحة استوديو كبيرة.<br>
+  - التفاعلية والتعلم التعاوني ممكن عبر البرامج التعليمية.<br>
+  - سرعة الغالق تتحكم في كمية الضوء وسرعة الالتقاط.<br>
+  - كل مراحل الإنتاج مرتبطة بتنظيم المحتوى وتقديم تجربة مشاهدة متكاملة.<br>
+</p>
+
+
+    <button id="rankingsBtn">التصنيفات القديمة ⬇️</button>
+
+
+    <div class="container">
+      <div style="display: flex;gap: 10px;">
+<div class="profile-box">
+    <p>منة الله مسعد \\ KID 🎩🪄💎</p>
+    <p>مستكشفة الاخطاء</p>
+</div>
+<div class="profile-box">
+    <p>Mera</p>
+    <p>مستكشفة الاخطاء</p>
+</div>
+
+<div class="profile-box">
+    <p>Abdo/عبدالوهاب</p>
+    <p>100% - #1 </p>
+</div>
+<div class="profile-box">
+    <a href="https://ahmeedn.github.io/AWM/index.html" style="
+    color: white;
+">احمد...</a>
+    <p>مطور الموقع</p>
+</div>
+
+      </div>
+
+        <div class="header">
+            <h1>🎓 موقع الاختبار الشامل</h1>
+        </div>
+
+        <!-- شاشة الترحيب -->
+        <div class="welcome-screen active" id="welcomeScreen">
+            <!-- قسم المتصدرين في البداية -->
+           <div class="welcome-leaderboard" bis_skin_checked="1">
+                <h2>🏆 المتصدرون</h2>
+                <div  bis_skin_checked="1">
+                    <div class="welcome-leaderboard-item" style="
+    border: 1px #00fdff solid;
+" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">💎</div>
+                        <div class="welcome-rank diamond" bis_skin_checked="1">#1</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">mera</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">101/101 (100%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" style="
+    border: 1px #ffd700 solid;
+" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🥇</div>
+                        <div class="welcome-rank gold" bis_skin_checked="1">#2</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">🤓</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">١٩ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">99/101 (98%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" style="
+    border: 1px #c0c0c0 solid;  
+                " bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🥈</div>
+                        <div class="welcome-rank silver" bis_skin_checked="1">#3</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">معشوق المجماهير❤️</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">99/101 (98%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#4</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">علياء🩷</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">98/101 (97%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#5</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">Ammar</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">98/101 (97%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#6</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">___</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">97/101 (96%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#7</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">🥰</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">94/101 (93%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#8</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">..</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">93/101 (92%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#9</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">Aya</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">89/101 (88%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#10</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">☠️</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">84/101 (83%)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- اختيار مجموعة الأسئلة -->
+            <div class="question-set-selection">
+                <label style="display: block; margin-bottom: 10px; font-weight: bold;">📚 اختر مجموعة الأسئلة</label>
+                <div class="question-set-buttons">
+                    <button class="question-set-btn active-set" data-set="A" onclick="selectQuestionSet('A')">
+                      اختبار انتاج برامج الفيديو    
+                    </button>
+                   
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>📝 أدخل اسمك للبدء</label>
+                <input type="text" id="userName" placeholder="اكتب اسمك هنا..." />
+            </div>
+
+            <button class="btn" id="startBtn" disabled>ابدأ الاختبار</button>
+        </div>
+
+        <!-- شاشة الاختبار -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div id="questionContainer"></div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn">السؤال السابق</button>
+                <button class="btn btn-primary" id="nextBtn">السؤال التالي</button>
+            </div>
+
+            <button class="btn" id="finishBtn" style="display:none; margin-top: 20px;">إنهاء الاختبار</button>
+        </div>
+
+        <!-- شاشة النتائج -->
+        <div class="results-screen" id="resultsScreen">
+            <div class="score-card">
+                <h3>✨ نتيجتك</h3>
+                <h2 id="finalScore">0/0</h2>
+                <div class="score-details">
+                    <div class="score-detail">
+                        <div class="number" id="correctAnswers">0</div>
+                        <div>إجابات صحيحة</div>
+                    </div>
+                    <div class="score-detail">
+                        <div class="number" id="wrongAnswers">0</div>
+                        <div>إجابات خاطئة</div>
+                    </div>
+                    <div class="score-detail">
+                        <div class="number" id="percentage">0%</div>
+                        <div>النسبة المئوية</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard">
+                <h3>🏆 أفضل 10 متسابقين</h3>
+                
+                <div id="leaderboardContainer"></div>
+            </div>
+
+            <button class="btn" id="restartBtn">ابدأ اختبار جديد</button>
+        </div>
+    </div>
+   
+    <div id="rankingsPopup" class="rankings-popup">
+        <div>
+            <button  onclick="aaa('1')" data-set="1" class="aaa">تصميم مواقف تعليميه</button>
+        </div>
+        <div class="RR">
+      
+</div>
+
+    <script>
+      document.getElementById("showTextBtn").onclick = function() {
+  const text = document.getElementById("importantText");
+  // إظهار النص إذا كان مخفي، وإخفاؤه إذا كان ظاهر
+  text.style.display = text.style.display === "none" ? "block" : "none";
+};
+      document.getElementById("pdf").onclick = function () {
+  const link = document.createElement("a");
+  link.href = "./ملخص انتاج برامج فيديو.pdf"; // مسار الملف
+  link.download = "ملخص انتاج برامج فيديو.pdf";   // اسم الملف عند التحميل
+  link.click();
+};
+
+        const btn3 = document.getElementById("darkModeToggle");
+
+btn3.onclick = () => {
+    document.body.classList.toggle("dark-mode");
+    localStorage.setItem("darkMode",
+        document.body.classList.contains("dark-mode")
+    );
+};
+
+// حفظ الوضع
+if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark-mode");
+}
+     
+let pro2 = `<div class="welcome-leaderboard" bis_skin_checked="1">
+                <h2>🏆 المتصدرون</h2>
+                <div id="welcomeLeaderboardContainer" bis_skin_checked="1">
+                    <div class="welcome-leaderboard-item" style="
+    border: 1px #00fdff solid;
+" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">💎</div>
+                        <div class="welcome-rank diamond" bis_skin_checked="1">#1</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">ـــــ</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">101/101 (100%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" style="
+    border: 1px #ffd700 solid;
+" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🥇</div>
+                        <div class="welcome-rank gold" bis_skin_checked="1">#2</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">🤓</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">١٩ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">99/101 (98%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" style="
+    border: 1px #c0c0c0 solid;  
+                " bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🥈</div>
+                        <div class="welcome-rank silver" bis_skin_checked="1">#3</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">معشوق المجماهير❤️</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">99/101 (98%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#4</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">علياء🩷</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">98/101 (97%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#5</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">Ammar</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">98/101 (97%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#6</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">___</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">97/101 (96%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#7</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">🥰</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">94/101 (93%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#8</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">..</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">93/101 (92%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#9</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">Aya</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">89/101 (88%)</div>
+                    </div>
+                
+                    <div class="welcome-leaderboard-item" ;="" "="" bis_skin_checked="1">
+                        <div class="trophy-icon" bis_skin_checked="1">🏅</div>
+                        <div class="welcome-rank " bis_skin_checked="1">#10</div>
+                        <div class="welcome-user-info" bis_skin_checked="1">
+                            <div class="welcome-user-name" bis_skin_checked="1">☠️</div>
+                            <div class="welcome-user-date" bis_skin_checked="1">٢٠ يناير ٢٠٢٦</div>
+                             <div class="welcome-score-badge" bis_skin_checked="1">اختبار تصميم مواقف تعليميه</div>
+                        </div>
+                        <div class="welcome-score-badge" bis_skin_checked="1">84/101 (83%)</div>
+                    </div>
+                </div>
+            </div>`
+
+  const btn = document.getElementById("rankingsBtn");
+const popup = document.getElementById("rankingsPopup");
+
+btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    popup.style.display = popup.style.display === "block" ? "none" : "block";
+});
+
+// إغلاق البوب-اب عند الضغط خارجها
+document.addEventListener("click", () => {
+    popup.style.display = "none";
+});
+
+// منع الإغلاق عند الضغط داخل البوب-اب
+popup.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+        // المتغيرات العامة
+        let questions = [];
+        let currentQuestion = 0;
+        let answers = {};
+        let userName = '';
+        const API_URL = 'https://asefd.pythonanywhere.com';
+
+        // عناصر DOM
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const userNameInput = document.getElementById('userName');
+        const questionsFileInput = document.getElementById('questionsFile');
+        const startBtn = document.getElementById('startBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const questionContainer = document.getElementById('questionContainer');
+        const progressFill = document.getElementById('progressFill');
+
+        // تحميل البيانات المحفوظة
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('quizData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.userName) userNameInput.value = data.userName;
+                if (data.questions) questions = data.questions;
+                if (data.currentQuestion !== undefined) currentQuestion = data.currentQuestion;
+                if (data.answers) answers = data.answers;
+            }
+        });
+
+        // أسئلة الاختبار - ضع أسئلتك هنا
+        questions = [
+          
+       { question: "الإنتاج التليفزيوني هو عملية إبداعية تهدف لتحويل الأفكار إلى صور وأصوات.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "تحتاج عملية الإنتاج التليفزيوني إلى خبرات في مجال المحاسبة فقط.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "مرحلة المونتاج هي المرحلة الخامسة من مراحل الإنتاج.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الجمهور المستهدف هو أحد العناصر الأساسية للعمل التليفزيوني.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "البحث في الشخصية يشمل المحور الأسري والمجتمعي والمهني.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "السيناريو المبدئي يحدد نوع اللقطات وزوايا التصوير بدقة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "ميزانية البرنامج يتم وضعها ضمن خطة الإنتاج.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المونتاج الفوري أوف لاين يتم أثناء عملية التصوير.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "عملية الـ logging تعني استبعاد اللقطات غير الصالحة مباشرة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "مرحلة ما بعد الإنتاج تشمل التسويق والدعاية والإعلان.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "الفيديوهات الرقمية خارج المنزل تعرض في الأماكن العامة كالشوارع.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "البساطة والجودة من سمات فيديوهات خارج المنزل.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "أول خطوة في إنتاج الفيديو هي إنشاء القصة المصورة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "تصحيح الألوان يعتبر من عناصر مرحلة ما قبل الإنتاج.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "استوديو الإنتاج مساحته أصغر من استوديو التنفيذ.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "المونيتور هو جهاز يستخدم لمراقبة صوت البرنامج فقط.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "مفتاح الكروما يستخدم لإضافة كتابة إلكترونية على الصورة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "صمام الكاميرا يحول الصورة الضوئية إلى إشارة كهربائية.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "الاستوديوهات الافتراضية تزيد من تكاليف الديكور المرتفعة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "يفضل أن يرتدي المذيع ملابس بنفس لون خلفية الكروما.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "اللونان الأزرق والأخضر هما الأفضل للكروما لعدم وجودهما في بشرة الإنسان.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "جهاز الفيديو فونت يستخدم لإضافة الكتابة على الصورة.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "العزل الصوتي في السينما أصعب منه في التليفزيون.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "يستخدم الصوف الزجاجي كأحد مواد العزل الصوتي في الاستوديو.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "ممر القطة هو ممر معلق يُستخدم لتثبيت الإضاءة والميكروفونات.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "يجب أن تكون أرضية الاستوديو خشنة لمنع انزلاق الكاميرات.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "ارتفاع سقف الاستوديو لا علاقة له بزوايا التصوير.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "البرامج الاستعراضية تحتاج إلى مساحة استوديو صغيرة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الحد الأدنى للمساحة الموصى بها للاستوديو هي 165 متر مربع.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "الإنتاج التعليمي يهدف لتحقيق أهداف مرتبطة بمقررات دراسية.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "البالتو هو القاعة الواسعة المخصصة لتصوير المواقف التعليمية.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "غرفة المراقبة (Control Room) تكون داخل البالتو مباشرة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "البرامج كاملة النص تسمح للمذيع بالارتجال.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الريبورتاج التليفزيوني ينقل الحقائق ويشبع فضول المشاهد.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "مساعد المخرج هو المسؤول الإداري والمالي عن البرنامج.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "مدير التصوير مسؤول عن الإضاءة وتكوين الصورة.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "فني المونتاج الإلكتروني يوزع اللقطات حسب الكاميرات.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "معد البرامج مسؤول عن كل ما يعرض على الشاشة.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "الرجيسير هو المسؤول عن تصميم ديكورات الفيلم.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "منسق المناظر يختار الإكسسوارات بالتعاون مع مهندس الديكور.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "فني ذراع الميكروفون يحتاج لقوة بدنية.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المكساج يعني تسجيل صوت جديد للفيلم ليناسب بلداً آخر.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "جهاز التليسينما يستخدم لبث الأفلام السينمائية عبر التليفزيون.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "اللقطة هي أكبر وحدة في الحدث الدرامي.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الديكوباج هو تقسيم المشاهد إلى لقطات مع وصف دقيق للحوار والكاميرا.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "كاميرا الاستوديو تكون خفيفة الوزن وسهلة الحمل.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "حلقة الزووم تستخدم لتوضيح الصورة (Focus).", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "حلقة الماكرو تستخدم لتصوير المواضيع القريبة جداً.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "زيادة الكاسب في الإضاءة الضعيفة قد تسبب تشويشاً.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "مفتاح توازن اللون الأبيض يمنع ظهور الصورة محمرة أو مزرقة.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "التصميم التعليمي هو طريقة عشوائية لحل المشكلات.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "أول مرحلة في تصميم البرامج التعليمية هي تطوير المحتوى.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "اختبار البرنامج قبل نشره يضمن خلوه من المشكلات التقنية.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "التفاعلية من ميزات البرامج التعليمية الإلكترونية.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "التعلم التعاوني لا يمكن تحقيقه عبر البرامج التعليمية.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "المنتج هو من يختار المخرج ويحدد ميزانية العمل.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المخرج يتواجد في البالتو طوال وقت التصوير.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "مدير الأرضية يعمل كحلقة وصل بين المخرج والممثلين في البالتو.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المدرس المتخصص ضروري في فريق إنتاج البرامج التعليمية.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "حركة الكاميرا الكثيرة تشتت المشاهد دائماً.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "حركة Pedestal تعني حركة الكاميرا أفقياً.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "حركة Pan تستخدم لمتابعة شخص يتحرك أفقياً.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "حركة Tilt هي حركة الكاميرا من أعلى لأسفل أو العكس.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "الكاميرا المحمولة باليد تعطي حركة ناعمة جداً.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الـ Dolly هي وضع الكاميرا على منصة بعجلات.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "الـ Tracking تعني حركة الكاميرا على قضبان.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "الإضاءة الصناعية تشمل النجوم والقمر.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "القطع Cut هو وسيلة انتقال تدريجية بين المشاهد.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "المسح Wipe يعني ظهور صورة جديدة تزيح القديمة.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المونتاج يهدف لاستبعاد اللقطات غير المناسبة.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "من فوائد تنظيم المحتوى تقليل التعلم الخامد.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المدخل المنطقي في تنظيم المحتوى يناسب الأطفال الصغار.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الترتيب من الكل إلى الجزء هو أحد طرق المدخل المنطقي.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المدخل السيكولوجي يركز على المادة العلمية فقط.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "المدخل التوفيقي يجمع بين المنطقي والسيكولوجي.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "نظرية ميجري تركز على جعل المحتوى سهل الفهم.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "التسلسل الجذاب في نظرية ميجري يعني البدء بالمثير.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "نظرية رونرت اقترحت تسعة مداخل لتنظيم المحتوى.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المدخل الحلزوني يعني تكرار المحتوى بنفس المستوى دون زيادة.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الربط الارتجاعي يعني تعليم آخر خطوة ثم الرجوع للأولى.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "نظرية فين قدمت ثلاث طرق شائعة للتنظيم.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المدخل الموضوعي يقدم المحتوى كوحدات معرفية متكاملة.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "التنظيم المنظومي يهدف لإزالة الحشو والتكرار.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "أول خطوة في بناء التنظيم المنظومي هي تحليل المحتوى.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "الرسوم التوضيحية لكل لقطة تسمى ستوري بورد.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "المونتاج الأجل أون لاين يتم بعد انتهاء التصوير.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "تنسيق مواعيد الممثلين من مهام مساعد المخرج.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "لوحة الكالكيت الإلكترونية تسهل المونتاج الرقمي.", options: ["صح", "خطأ"], correctAnswer: 0 },
+  { question: "سرعة الغالق تتحكم في كمية الضوء فقط.", options: ["صح", "خطأ"], correctAnswer: 1 },
+  { question: "التعلم من خلال السبب والنتيجة أحد مداخل نظرية رونرت.", options: ["صح", "خطأ"], correctAnswer: 0 },
+   {
+    question: "ما مفهوم الإنتاج التليفزيوني؟",
+    options: [
+      "عملية تسجيل صوت فقط",
+      "عملية إبداعية لتحويل الأفكار إلى صور وأصوات",
+      "عملية بث مباشر فقط",
+      "عملية مونتاج نهائي"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من مراحل الإنتاج التليفزيوني؟",
+    options: [
+      "التحضير",
+      "التحضير والإنتاج",
+      "التصوير فقط",
+      "البث فقط"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "مرحلة ما قبل التصوير تُسمى؟",
+    options: [
+      "مرحلة المونتاج",
+      "مرحلة ما بعد الإنتاج",
+      "مرحلة ما قبل الإنتاج",
+      "مرحلة البث"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "من عناصر العمل التليفزيوني الأساسية؟",
+    options: [
+      "الكاميرا فقط",
+      "الجمهور المستهدف",
+      "الميزانية فقط",
+      "الاستديو"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "ما الهدف من البحث الميداني؟",
+    options: [
+      "زيادة التكلفة",
+      "تحديد أماكن وزوايا التصوير",
+      "تسجيل الصوت",
+      "اختيار المذيع"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "السيناريو المبدئي لا يضمن؟",
+    options: [
+    "زوايا التصوير",
+  "أحجام اللقطات",
+  "النص النهائي",
+  "حركات الكاميرا"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "ما المقصود بالدستوري بورد؟",
+    options: [
+      "ميزانية البرنامج",
+      "رسم توضيحي لكل لقطة",
+      "جدول البث",
+      "خطة التسويق"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المونتاج الفوري يتم في مرحلة؟",
+    options: [
+      "ما بعد الإنتاج",
+      "قبل الإنتاج",
+      "أثناء التصوير",
+      "بعد البث"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "من خطوات المونتاج؟",
+    options: [
+      "حذف اللقطات غير الصالحة",
+      "تصميم الديكور",
+      "اختيار المذيع",
+      "كتابة النص"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "مرحلة ما بعد الإنتاج تشمل؟",
+    options: [
+      "التصوير",
+      "التسويق والدعاية",
+      "كتابة السيناريو",
+      "اختيار الموقع"
+    ],
+    correctAnswer: 1
+  },
+
+  /* ====== 10 ====== */
+
+  {
+    question: "ما هو الاستديو التلفزيوني؟",
+    options: [
+      "مكان المونتاج فقط",
+      "مكان تسجيل وبث البرامج",
+      "مكان التخزين",
+      "مكان الإضاءة فقط"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "استديو التنفيذ يستخدم لـ؟",
+    options: [
+      "الدراما فقط",
+      "البرامج المسجلة أو المباشرة",
+      "الأفلام السينمائية",
+      "المونتاج"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من مكونات الاستديو؟",
+    options: [
+      "المونيتور",
+      "السيناريو",
+      "الملابس",
+      "الموسيقى"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "وظيفة طاولة مراقبة الصوت؟",
+    options: [
+      "التحكم في الإضاءة",
+      "التحكم في الصوت والصورة",
+      "التصوير",
+      "المونتاج"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "أفضل ألوان الكروما؟",
+    options: [
+      "الأحمر",
+      "الأصفر",
+      "الأزرق والأخضر",
+      "الأسود"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "الكروما كي تُستخدم لـ؟",
+    options: [
+      "تحسين الصوت",
+      "استبدال الخلفية",
+      "زيادة الإضاءة",
+      "تحريك الكاميرا"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من أجهزة الاستديو؟",
+    options: [
+      "الميكروفونات",
+      "السيناريو",
+      "النص",
+      "الديكور الورقي"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "العزل الصوتي يهدف إلى؟",
+    options: [
+      "زيادة الصدى",
+      "تقليل الضوضاء",
+      "تحسين الإضاءة",
+      "تسريع التصوير"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "ممر القطة يُستخدم لـ؟",
+    options: [
+      "التصوير",
+      "تعليق الإضاءة والميكروفونات",
+      "المونتاج",
+      "التخزين"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "الحد الأدنى لمساحة الاستديو الموصى بها؟",
+    options: [
+      "50 م²",
+      "100 م²",
+      "165 م²",
+      "300 م²"
+    ],
+    correctAnswer: 2
+  },
+
+  /* ====== 20 ====== */
+
+  {
+    question: "من أنواع البرامج؟",
+    options: [
+      "برامج تعليمية",
+      "برامج صامتة",
+      "برامج ثابتة",
+      "برامج بدون محتوى"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "الربورتاج التلفزيوني يهدف إلى؟",
+    options: [
+      "الترفيه فقط",
+      "نقل الحقائق",
+      "الدراما",
+      "الإعلانات"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من أدوار مساعد المخرج؟",
+    options: [
+      "التصوير",
+      "تنظيم الملابس والماكياج",
+      "المونتاج",
+      "الإضاءة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "مدير التصوير مسؤول عن؟",
+    options: [
+      "الصوت",
+      "تكوين الصورة والإضاءة",
+      "الملابس",
+      "الديكور"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المصور مسؤول عن؟",
+    options: [
+      "تشغيل الكاميرا",
+      "كتابة النص",
+      "المونتاج",
+      "الصوت"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "Key Grip مسؤول عن؟",
+    options: [
+      "حركات الكاميرا",
+      "الصوت",
+      "الديكور",
+      "الملابس"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "فني المونتاج يقوم بـ؟",
+    options: [
+      "تصوير اللقطات",
+      "ترتيب اللقطات",
+      "اختيار الممثلين",
+      "الإضاءة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "كاتب السيناريو مسؤول عن؟",
+    options: [
+      "الإخراج",
+      "النص التلفزيوني",
+      "الإضاءة",
+      "التصوير"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "اللقطة Shot تعني؟",
+    options: [
+      "مشهد كامل",
+      "أصغر وحدة درامية",
+      "فيلم كامل",
+      "برنامج"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المشهد Scene يتكون من؟",
+    options: [
+      "صورة واحدة",
+      "عدة لقطات",
+      "برنامج",
+      "إعلان"
+    ],
+    correctAnswer: 1
+  },
+{
+    question: "ما وظيفة White Balance في الكاميرا؟",
+    options: [
+      "زيادة الإضاءة",
+      "توازن الألوان",
+      "تقريب الصورة",
+      "تحريك الكاميرا"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "حلقة الزووم تستخدم لـ؟",
+    options: [
+      "ضبط الإضاءة",
+      "تقريب وإبعاد المشهد",
+      "تسجيل الصوت",
+      "توازن اللون"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "حلقة الـ Iris تتحكم في؟",
+    options: [
+      "الصوت",
+      "كمية الضوء",
+      "الزووم",
+      "الماكرو"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Gain يُستخدم في حالة؟",
+    options: [
+      "الإضاءة القوية",
+      "الإضاءة الضعيفة",
+      "النهار",
+      "الخلفيات"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من شاشات الكاميرا؟",
+    options: [
+      "Finder View",
+      "Monitor",
+      "Projector",
+      "Mixer"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "حركة Pan تكون؟",
+    options: [
+      "رأسية",
+      "أفقية",
+      "دائرية",
+      "ثابتة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "حركة Tilt تكون؟",
+    options: [
+      "أفقية",
+      "رأسية",
+      "للأمام",
+      "للخلف"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "كاميرا Dolly تتحرك؟",
+    options: [
+      "ثابتة",
+      "على عجلات",
+      "يدويًا فقط",
+      "بالكرين"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Steadicam تُستخدم لـ؟",
+    options: [
+      "تصوير ثابت",
+      "حركة ناعمة أثناء المشي",
+      "الإضاءة",
+      "الصوت"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Crane تُستخدم لـ؟",
+    options: [
+      "لقطات علوية",
+      "تسجيل الصوت",
+      "الإضاءة",
+      "المونتاج"
+    ],
+    correctAnswer: 0
+  },
+
+  /* ====== 41 ====== */
+
+  {
+    question: "الإضاءة عنصر أساسي لأنها؟",
+    options: [
+      "تزود التكلفة",
+      "توضح ملامح الصورة",
+      "تبطئ التصوير",
+      "تؤثر على الصوت"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من مصادر الإضاءة الطبيعية؟",
+    options: [
+      "المصابيح",
+      "الشمس",
+      "الشموع",
+      "الكشافات"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Cut في المونتاج يعني؟",
+    options: [
+      "انتقال بدون مؤثر",
+      "اختفاء تدريجي",
+      "مزج",
+      "مسح"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "Fade يستخدم لـ؟",
+    options: [
+      "قطع مفاجئ",
+      "ظهور أو اختفاء تدريجي",
+      "تحريك الكاميرا",
+      "تغيير زاوية"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Dissolve يعني؟",
+    options: [
+      "قطع",
+      "مزج تدريجي",
+      "مسح",
+      "تكبير"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Wipe هو؟",
+    options: [
+      "مزج",
+      "مسح بصورة جديدة",
+      "قطع",
+      "تدوير"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "الصوت يمكن تسجيله؟",
+    options: [
+      "أثناء التصوير فقط",
+      "بعد التصوير فقط",
+      "أثناء أو بعد التصوير",
+      "لا يسجل"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "المونتاج يهدف إلى؟",
+    options: [
+      "ترتيب اللقطات",
+      "زيادة الإضاءة",
+      "تحسين الصوت فقط",
+      "اختيار الممثلين"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "قاعدة الأثلاث تُستخدم في؟",
+    options: [
+      "الصوت",
+      "تكوين الصورة",
+      "المونتاج",
+      "الإضاءة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Leading Lines تعني؟",
+    options: [
+      "خطوط توجه عين المشاهد",
+      "ألوان",
+      "إضاءة",
+      "مؤثرات"
+    ],
+    correctAnswer: 0
+  },
+
+  /* ====== 51 ====== */
+
+  {
+    question: "التوازن في الصورة يعني؟",
+    options: [
+      "عدم ترك فراغ مزعج",
+      "زيادة الإضاءة",
+      "تقليل الألوان",
+      "تكبير المشهد"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "Framing يعني؟",
+    options: [
+      "إطار داخل الصورة",
+      "قص الصورة",
+      "تصغير المشهد",
+      "تحريك الكاميرا"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "المحتوى هو؟",
+    options: [
+      "الديكور",
+      "المعارف والمهارات",
+      "الإضاءة",
+      "الكاميرات"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من مبادئ اختيار المحتوى؟",
+    options: [
+      "أن يحقق الأهداف التعليمية",
+      "أن يكون طويل",
+      "أن يكون صعب",
+      "أن يكون نظري فقط"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "التنظيم الرأسي يعتمد على؟",
+    options: [
+      "التكرار",
+      "تراكم الخبرات",
+      "العشوائية",
+      "السرعة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "التنظيم الأفقي يهتم بـ؟",
+    options: [
+      "سنوات الدراسة",
+      "ربط المواد ببعضها",
+      "العمق فقط",
+      "التقييم"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "أهمية تنظيم المحتوى؟",
+    options: [
+      "تقليل التعلم",
+      "زيادة فاعلية التعلم",
+      "إضاعة الوقت",
+      "تعقيد المادة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من مشكلات تنظيم المحتوى؟",
+    options: [
+      "سهولة العرض",
+      "صعوبة التوازن بين العمق والشمول",
+      "قلة المعلومات",
+      "وضوح الأفكار"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المدخل المنطقي يناسب؟",
+    options: [
+      "الأطفال",
+      "الكبار",
+      "الجميع",
+      "المبتدئين"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المدخل السيكولوجي يركز على؟",
+    options: [
+      "المادة",
+      "المتعلم",
+      "الزمن",
+      "الاختبارات"
+    ],
+    correctAnswer: 1
+  },
+
+  /* ====== 61 ====== */
+
+  {
+    question: "نظرية ميجير تركز على؟",
+    options: [
+      "الحفظ",
+      "جعل المحتوى ذو معنى",
+      "السرعة",
+      "الاختبارات"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "من خطوات ميجير؟",
+    options: [
+      "من الخاص للعام",
+      "من العام للخاص",
+      "العشوائية",
+      "التكرار فقط"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "نظرية رونتر تقدم؟",
+    options: [
+      "5 مداخل",
+      "9 مداخل",
+      "3 مداخل",
+      "مدخل واحد"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المدخل الحلزوني يعتمد على؟",
+    options: [
+      "التكرار بعمق أكبر",
+      "التجاهل",
+      "السرعة",
+      "التقليل"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "نظرية فِني ظهرت عام؟",
+    options: [
+      "1970",
+      "1986",
+      "2000",
+      "2010"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "من أهداف التنظيم الجيد؟",
+    options: [
+      "إزالة الحشو",
+      "زيادة التكرار",
+      "تقليل الفهم",
+      "تعقيد المحتوى"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "فريق الإنتاج يتكون من؟",
+    options: [
+      "المخرج فقط",
+      "عدة تخصصات",
+      "المصور فقط",
+      "المونتير"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المنتج مسؤول عن؟",
+    options: [
+      "التصوير",
+      "ميزانية البرنامج",
+      "الإضاءة",
+      "الصوت"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "مدير الأرضية يقوم بـ؟",
+    options: [
+      "دور المخرج داخل الاستديو",
+      "المونتاج",
+      "الصوت",
+      "الإعلان"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "البرامج التعليمية تهدف إلى؟",
+    options: [
+      "الترفيه",
+      "تحقيق أهداف تعليمية",
+      "الإعلانات",
+      "الدراما"
+    ],
+    correctAnswer: 1
+  },
+
+  /* ====== 71 ====== */
+
+  {
+    question: "الوسائط المتعددة تساعد على؟",
+    options: [
+      "تشتيت الطلاب",
+      "جذب الانتباه",
+      "تقليل الفهم",
+      "إلغاء التفاعل"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "التعلم التعاوني يهدف إلى؟",
+    options: [
+      "العمل الفردي",
+      "العمل الجماعي",
+      "العزلة",
+      "الحفظ"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "التقييم يساعد على؟",
+    options: [
+      "معرفة نقاط القوة والضعف",
+      "إضاعة الوقت",
+      "إلغاء التعلم",
+      "تقليل الجودة"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "البرامج غير الكاملة النصوص؟",
+    options: [
+      "بدون رقابة",
+      "تنتج بدون نص كامل",
+      "بدون إخراج",
+      "بدون تصوير"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "البرامج كاملة النص؟",
+    options: [
+      "يمكن التعديل فيها",
+      "لا يسمح بالتعديل",
+      "بدون نص",
+      "مرنة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "الديكوباج يعني؟",
+    options: [
+      "تقسيم المشاهد للقطات",
+      "الإضاءة",
+      "المونتاج",
+      "التصوير"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "Camera Movement تعني؟",
+    options: [
+      "حركة الكاميرا",
+      "تغيير العدسة",
+      "الصوت",
+      "الإضاءة"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "Handheld تُستخدم لـ؟",
+    options: [
+      "لقطات نفسية مضطربة",
+      "لقطات ثابتة",
+      "الإضاءة",
+      "الصوت"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "Tracking تعني؟",
+    options: [
+      "تثبيت الكاميرا",
+      "متابعة الممثل",
+      "إيقاف التصوير",
+      "المونتاج"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "Minimalism يعني؟",
+    options: [
+      "ازدحام الصورة",
+      "التقليل والمساحة السلبية",
+      "إضاءة قوية",
+      "صوت عالي"
+    ],
+    correctAnswer: 1
+  },{
+    question: "لماذا يُعد الإنتاج التليفزيوني عملية إبداعية وليس تقنية فقط؟",
+    options: [
+      "لأنه يعتمد على الأجهزة فقط",
+      "لأنه يركز على البث المباشر",
+      "لأنه يحول الفكرة المجردة إلى رسالة بصرية مؤثرة",
+      "لأنه لا يحتاج تخطيط"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "العلاقة بين مرحلة ما قبل الإنتاج وجودة العمل النهائي هي؟",
+    options: [
+      "لا توجد علاقة مباشرة",
+      "علاقة عكسية",
+      "مرحلة شكلية فقط",
+      "علاقة طردية تؤثر على نجاح العمل"
+    ],
+    correctAnswer: 3
+  },
+  {
+    question: "السبب الرئيسي لإعداد السيناريو المبدئي هو؟",
+    options: [
+      "تحديد الميزانية",
+      "تنظيم الرؤية البصرية قبل التنفيذ",
+      "اختيار الممثلين",
+      "تحديد زمن البث"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "لماذا لا يُعتبر السيناريو المبدئي نهائيًا؟",
+    options: [
+      "لأنه لا يحتوي على فكرة",
+      "لأنه يتغير حسب نتائج البحث والتصوير",
+      "لأنه غير مكتوب",
+      "لأنه لا يستخدم في الإنتاج"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "الدستوري بورد يُعد حلقة وصل بين؟",
+    options: [
+      "النص والمونتاج",
+      "التصوير والبث",
+      "الفكرة والتنفيذ البصري",
+      "الإضاءة والصوت"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "الميزة الأساسية للمونتاج الفوري أثناء التصوير هي؟",
+    options: [
+      "تقليل عدد الكاميرات",
+      "اكتشاف الأخطاء مبكرًا",
+      "زيادة زمن الإنتاج",
+      "الاستغناء عن المونتاج النهائي"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "لماذا يُفضل استخدام الكروما باللون الأخضر أو الأزرق؟",
+    options: [
+      "لأنه أوضح للكاميرا",
+      "لأنه لا يتداخل مع لون البشرة",
+      "لأنه أقل تكلفة",
+      "لأنه أسهل في الإضاءة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "الاستوديو الافتراضي يحقق جدواه الاقتصادية لأنه؟",
+    options: [
+      "يستخدم كاميرات أقل",
+      "يلغي دور المخرج",
+      "يستبدل الديكور الحقيقي بديكور رقمي",
+      "يقلل زمن البث"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "سبب ضرورة الإضاءة المتساوية في الكروما هو؟",
+    options: [
+      "تحسين جودة الصوت",
+      "منع ظهور الظلال أثناء الفصل",
+      "تقليل استهلاك الكهرباء",
+      "زيادة عمق الصورة"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "الفرق الجوهري بين استديو الإنتاج واستديو التنفيذ هو؟",
+    options: [
+      "نوع الكاميرات",
+      "طبيعة البرامج ومساحته",
+      "عدد العاملين",
+      "زمن التصوير"
+    ],
+    correctAnswer: 1
+  },
+
+  {
+    question: "لماذا يُعد العزل الصوتي في التلفزيون أصعب من السينما؟",
+    options: [
+      "لأن الاستديو أكبر",
+      "لأن الصوت والصورة يُسجلان معًا",
+      "لأن الميكروفونات ضعيفة",
+      "لأن الإضاءة أعلى"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "وظيفة ممر القطة داخل الاستديو ترتبط بـ؟",
+    options: [
+      "المونتاج",
+      "حركة الكاميرا",
+      "تثبيت الإضاءة والميكروفونات",
+      "التخزين"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "زيادة مساحة الاستديو تؤدي إلى؟",
+    options: [
+      "تقليل الجودة",
+      "صعوبة الحركة",
+      "مرونة أكبر في الديكور والحركة",
+      "تقليل التكاليف"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "دور مدير التصوير يختلف عن المصور لأنه؟",
+    options: [
+      "يشغّل الكاميرا فقط",
+      "ينفذ تعليمات الإضاءة",
+      "يترجم رؤية المخرج بصريًا",
+      "يعمل في المونتاج"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "استخدام Handheld Camera يُفضّل عندما؟",
+    options: [
+      "نحتاج صورة ثابتة",
+      "نصور مشهدًا دراميًا نفسيًا",
+      "نصور أخبار",
+      "نصور داخل الاستديو"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "الفرق بين Pan وTilt هو؟",
+    options: [
+      "سرعة الحركة",
+      "نوع العدسة",
+      "اتجاه الحركة",
+      "عدد الكاميرات"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "لماذا يُستخدم Steadicam بدل Handheld أحيانًا؟",
+    options: [
+      "لزيادة الاهتزاز",
+      "لتقليل التكلفة",
+      "للحفاظ على حركة ناعمة",
+      "لتثبيت الصوت"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "Cut يُستخدم غالبًا عندما؟",
+    options: [
+      "نريد انتقالًا غير ملحوظ",
+      "نريد تأثيرًا بصريًا",
+      "نغير الزمن",
+      "نغير المكان تدريجيًا"
+    ],
+    correctAnswer: 0
+  },
+  {
+    question: "Dissolve يُستخدم للتعبير عن؟",
+    options: [
+      "انتقال حاد",
+      "مزج زمني أو شعوري",
+      "لقطة ثابتة",
+      "مشهد أكشن"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "قاعدة الأثلاث تهدف إلى؟",
+    options: [
+      "تكبير العنصر",
+      "توازن بصري وجذب الانتباه",
+      "زيادة الإضاءة",
+      "تقليل الخلفية"
+    ],
+    correctAnswer: 1
+  },
+
+  {
+    question: "التنظيم الرأسي للمحتوى يعتمد على؟",
+    options: [
+      "الترابط بين المواد",
+      "تدرج الخبرات عبر الزمن",
+      "التكرار العشوائي",
+      "الحفظ"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المدخل السيكولوجي في تنظيم المحتوى يركز على؟",
+    options: [
+      "المادة العلمية",
+      "سهولة التقييم",
+      "احتياجات المتعلم",
+      "الزمن الدراسي"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "نظرية ميجير تهدف أساسًا إلى؟",
+    options: [
+      "زيادة الكم المعرفي",
+      "جعل التعلم ذا معنى",
+      "التسلسل الزمني",
+      "التكرار"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "المدخل الحلزوني يتميز بـ؟",
+    options: [
+      "عدم التكرار",
+      "الانتقال المفاجئ",
+      "التكرار بعمق متزايد",
+      "الترتيب العشوائي"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "ميزة البرامج التعليمية الرقمية الأساسية هي؟",
+    options: [
+      "قلة التكلفة فقط",
+      "المرونة والتفاعل",
+      "الترفيه",
+      "تقليل دور المعلم"
+    ],
+    correctAnswer: 1
+  },
+  {
+    question: "استخدام الوسائط المتعددة يحقق؟",
+    options: [
+      "تشتيت المتعلم",
+      "زيادة الحمل المعرفي دائمًا",
+      "تحفيز الفهم والانتباه",
+      "إلغاء النص"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "التعلم التعاوني يسهم في؟",
+    options: [
+      "العزلة",
+      "ضعف التفاعل",
+      "تنمية مهارات العمل الجماعي",
+      "تقليل المشاركة"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "الهدف النهائي من تنظيم المحتوى هو؟",
+    options: [
+      "زيادة الصفحات",
+      "سهولة العرض فقط",
+      "تحقيق تعلم فعّال ومستمر",
+      "تقليل زمن الحصة"
+    ],
+    correctAnswer: 2
+  },
+  {
+    question: "لماذا يُعد التنظيم الجيد شرطًا لجودة التعلم؟",
+    options: [
+      "لأنه يقلل المحتوى",
+      "لأنه يسهل بناء العلاقات المعرفية",
+      "لأنه يختصر المنهج",
+      "لأنه يلغي التقييم"
+    ],
+    correctAnswer: 1
+  },
+  { question: "سلام ي شباب", options: ["سلام"], correctAnswer: 0 },
+];
+
+    
+ 
+
+        
+
+        // مجموعة أسئلة بديلة - المجموعة B
+        const questionsB = [
+             {
+    question: "ما نوع البيانات الذي يُستخدم لتخزين الأعداد الصحيحة في فيجوال بيزك؟",
+    options: ["Integer", "Boolean", "String", "Double"],
+    correctAnswer: 0
+  },
+  
+        ];
+
+        let selectedQuestionSet = 'A'; // لحفظ المجموعة المختارة
+
+        // تفعيل زر البدء
+        userNameInput.addEventListener('input', checkStartButton);
+
+        function checkStartButton() {
+            startBtn.disabled = !userNameInput.value.trim();
+            
+        }
+
+        // اختيار مجموعة الأسئلة
+        function selectQuestionSet(set) {
+            selectedQuestionSet = set;
+            
+           
+             if (set === 'B') {
+                questions = [...questionsB];
+            }
+
+            // تحديث واجهة الأزرار
+            document.querySelectorAll('.question-set-btn').forEach(btn => {
+                btn.classList.remove('active-set');
+            });
+            document.querySelector(`[data-set="${set}"]`).classList.add('active-set');
+        }
+   function aaa(set) {
+               
+            if (set === '1') {
+                document.querySelector('.RR').innerHTML= pro2
+            }
+
+            if (set === '2') {
+                document.querySelector('.RR').innerHTML=" "
+            }
+             
+            // تحديث واجهة الأزرار
+            document.querySelectorAll('.aaa').forEach(btn => {
+                btn.classList.remove('active-set');
+            });
+            document.querySelector(`[data-set="${set}"]`).classList.add('active-set');
+            console.log(set);
+        }
+
+        // بدء الاختبار
+        startBtn.addEventListener('click', () => {
+            
+            userName = userNameInput.value.trim();
+            if (!userName || questions.length === 0) return;
+       
+            // إذا كان هناك اختبار محفوظ، استكمل من حيث توقفت
+            const savedData = localStorage.getItem('quizProgress');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                if (data.userName === userName && data.currentQuestion !== undefined) {
+                    currentQuestion = data.currentQuestion;
+                    answers = data.answers || {};
+                }
+            }
+                document.querySelectorAll('.question-set-btn').forEach(btn => {
+                    if (btn.classList.contains('active-set')) {
+                        nameText= btn.textContent.trim();
+                        
+                    }
+                });
+
+            saveProgress();
+            welcomeScreen.classList.remove('active');
+            quizScreen.classList.add('active');
+            showQuestion();
+        });
+
+        // عرض السؤال
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressFill.style.width = progress + '%';
+
+            // التحقق إذا تم الإجابة على السؤال من قبل
+            const isAnswered = answers[currentQuestion] !== undefined;
+            const userAnswer = answers[currentQuestion];
+            const correctAnswer = question.correctAnswer;
+
+            questionContainer.innerHTML = `
+                <div class="question-card">
+                    <div class="question-number">السؤال ${currentQuestion + 1} من ${questions.length}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => {
+                            let optionClass = '';
+                            let indicator = '';
+                            
+                            if (isAnswered) {
+                                // إظهار الإجابة الصحيحة والخاطئة
+                                if (index === correctAnswer) {
+                                    optionClass = 'correct disabled';
+                                    indicator = '<span class="answer-indicator">✓</span>';
+                                } else if (index === userAnswer) {
+                                    optionClass = 'wrong disabled';
+                                    indicator = '<span class="answer-indicator">✗</span>';
+                                } else {
+                                    optionClass = 'disabled';
+                                }
+                            } else if (userAnswer === index) {
+                                optionClass = 'selected';
+                            }
+                            
+                            return `
+                                <label class="option ${optionClass}">
+                                    ${indicator}
+                                    <input type="radio" name="answer" value="${index}" 
+                                        ${userAnswer === index ? 'checked' : ''}
+                                        ${isAnswered ? 'disabled' : ''}>
+                                    ${option}
+                                </label>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+
+            // إضافة event listeners للخيارات فقط إذا لم تتم الإجابة
+            if (!isAnswered) {
+                document.querySelectorAll('.option').forEach((option, index) => {
+                    option.addEventListener('click', () => selectOption(index));
+                });
+            }
+
+            // تحديث أزرار التنقل
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.style.display = currentQuestion < questions.length - 1 ? 'block' : 'none';
+            finishBtn.style.display = currentQuestion === questions.length - 1 ? 'block' : 'none';
+
+            saveProgress();
+        }
+
+        function selectOption(index) {
+            const question = questions[currentQuestion];
+            const correctAnswer = question.correctAnswer;
+            
+            // حفظ الإجابة
+            answers[currentQuestion] = index;
+            
+            // إظهار النتيجة فوراً
+            const options = document.querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                opt.classList.add('disabled');
+                const radio = opt.querySelector('input[type="radio"]');
+                if (radio) radio.disabled = true;
+                
+                if (i === correctAnswer) {
+                    opt.classList.add('correct');
+                    opt.innerHTML = '<span class="answer-indicator">✓</span>' + opt.innerHTML;
+                } else if (i === index) {
+                    opt.classList.add('wrong');
+                    opt.innerHTML = '<span class="answer-indicator">✗</span>' + opt.innerHTML;
+                }
+                
+                opt.classList.remove('selected');
+            });
+            
+            saveProgress();
+        }
+
+        // التنقل بين الأسئلة
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                showQuestion();
+            }
+        });
+
+        // إنهاء الاختبار
+        finishBtn.addEventListener('click', async () => {
+       
+            const score = calculateScore();
+            const totalQuestions = questions.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+
+            // إرسال النتيجة للباك إند
+            try {
+                await fetch(`${API_URL}/submit-result`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: userName,
+                        score: score,
+                        totalQuestions: totalQuestions,
+                        percentage: percentage,
+                        nameText: nameText,
+                        date: new Date().toISOString()
+                    })
+                });
+                    const video = document.createElement('video');
+                    video.src = 'https://cdn-cf-east.streamable.com/video/mp4/xfuohn.mp4?Expires=1769283645326&Key-Pair-Id=APKAIEYUVEN4EVB2OKEQ&Signature=AcT1mFHivm6t5WB~SITbQ5GBjRJPQY1WntE9YAznLULqMu7s-n5mfMGBzzc63pzZ5ji1MmOPS~zfY3Mn3-wIuTWAdyvUgXHMXNhVbXFAslJ2gbormtsi5g8klWv95TU3an~rwHBA9k9j78PSJ6GkDXKWV3dPu4BORoMBfqgeKaJ-T8S~-d-GD~uWh6Uj41GDr6WivJm1cg~mdO8ndzblVPbDzHi9sii01ScfF7M8cjgu88TVCUpTMtwe6yeTecwe9C5TeIV1F9nAdUmgUrVjIelXDZ0BtXKAXoNB1dI7wesQyqs7KOdCoQ0BqjXxE6A8qkOrzibi08i~2BuP4Vlk3A__'; // حط مسار الفيديو الصحيح
+                    video.style.position = 'fixed';
+                    video.style.top = '0';
+                    video.style.left = '0';
+                    video.style.width = '100%';
+                    video.style.height = '100%';
+                    video.style.zIndex = '9999';
+                    video.style.objectFit = 'cover';
+                    video.autoplay = true;
+
+                    video.playsInline = true;
+
+                    // إضافة الفيديو للصفحة
+                    document.body.appendChild(video);
+
+                    // بعد انتهاء الفيديو، حذفه
+                    video.addEventListener('ended', () => {
+                        video.remove();
+                    });
+                // عرض النتائج
+                await showResults(score, totalQuestions, percentage);
+            } catch (error) {
+                alert('حدث خطأ في حفظ النتيجة. تأكد من تشغيل الباك إند.');
+                await showResults(score, totalQuestions, percentage);
+            }
+        });
+
+        function calculateScore() {
+            let score = 0;
+            questions.forEach((question, index) => {
+                if (answers[index] === question.correctAnswer) {
+                    score++;
+                }
+            });
+            return score;
+        }
+
+        async function showResults(score, total, percentage) {
+            document.getElementById('finalScore').textContent = `${score}/${total}`;
+            document.getElementById('correctAnswers').textContent = score;
+            document.getElementById('wrongAnswers').textContent = total - score;
+            document.getElementById('percentage').textContent = percentage + '%';
+
+            // جلب أفضل 10 نتائج من localStorage أو من الباك إند
+            try {
+                // محاولة جلب من localStorage أولاً
+                let topScores = [];
+                const cachedScores = localStorage.getItem('leaderboardData');
+                
+                if (cachedScores) {
+                    topScores = JSON.parse(cachedScores);
+                }
+                
+                // تحديث من الباك إند
+                try {
+                    const response = await fetch(`${API_URL}/top-scores`);
+                    const freshScores = await response.json();
+                    topScores = freshScores;
+                    
+                    // حفظ في localStorage
+                    localStorage.setItem('leaderboardData', JSON.stringify(freshScores));
+                    localStorage.setItem('leaderboardLastUpdate', new Date().toISOString());
+                } catch (error) {
+                    console.log('استخدام البيانات المحفوظة محلياً');
+                }
+                
+                displayLeaderboard(topScores);
+            } catch (error) {
+                document.getElementById('leaderboardContainer').innerHTML = 
+                    '<div class="error">تعذر تحميل قائمة المتصدرين.</div>';
+            }
+
+            quizScreen.classList.remove('active');
+            resultsScreen.classList.add('active');
+            clearProgress();
+        }
+
+        function displayLeaderboard(scores) {
+            const container = document.getElementById('leaderboardContainer');
+            const userScore = calculateScore();
+            
+            container.innerHTML = scores.map((item, index) => {
+                const isCurrentUser = item.name === userName;
+                const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
+                
+                return `
+                    <div class="leaderboard-item ${isCurrentUser ? 'current-user' : ''}">
+                        <div class="rank ${rankClass}">#${index + 1}</div>
+                        <div class="user-info">
+                            <strong>${item.name}</strong>
+                            ${isCurrentUser ? ' (أنت)' : ''}
+                        </div>
+                        <div class="score-badge">${item.score}/${item.totalQuestions} (${item.percentage}%)</div>
+                    </div>
+                `;
+            }).join('');
+        }
+let nameText= "";
+        // إعادة تشغيل الاختبار
+        restartBtn.addEventListener('click', () => {
+            currentQuestion = 0;
+            answers = {};
+            clearProgress();
+            resultsScreen.classList.remove('active');
+            welcomeScreen.classList.add('active');
+            
+            loadWelcomeLeaderboard();
+     
+        });
+
+        // حفظ التقدم
+        function saveProgress() {
+            // حفظ التقدم فقط بدون الأسئلة
+            localStorage.setItem('quizProgress', JSON.stringify({
+                userName: userName,
+                currentQuestion: currentQuestion,
+                answers: answers
+            }));
+        }
+
+        function clearProgress() {
+            localStorage.removeItem('quizProgress');
+        }
+
+        // تحميل قائمة المتصدرين في شاشة البداية
+        async function loadWelcomeLeaderboard() {
+            const container = document.getElementById('welcomeLeaderboardContainer');
+            container.innerHTML = '<div class="loading" style="color: white;">جاري تحميل قائمة المتصدرين...</div>';
+            
+            // محاولة تحميل من localStorage أولاً للعرض السريع
+            const cachedScores = localStorage.getItem('leaderboardData');
+            if (cachedScores) {
+                try {
+                    const scores = JSON.parse(cachedScores);
+                    displayWelcomeLeaderboard(scores, container);
+                } catch (e) {
+                    console.error('خطأ في قراءة البيانات المحفوظة');
+                }
+            }
+            
+            // جلب البيانات الجديدة من الباك إند
+            try {
+                const response = await fetch(`${API_URL}/top-scores`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('فشل في الاتصال بالباك إند');
+                }
+                
+                const allScores = await response.json();
+                console.log('تم جلب البيانات:', allScores);
+                
+                // حفظ جميع المتصدرين في localStorage
+                localStorage.setItem('leaderboardData', JSON.stringify(allScores));
+                localStorage.setItem('leaderboardLastUpdate', new Date().toISOString());
+                
+                // عرض البيانات المحدثة
+                displayWelcomeLeaderboard(allScores, container);
+                
+            } catch (error) {
+                console.error('خطأ في جلب البيانات:', error);
+                
+                // إذا فشل التحميل ولا توجد بيانات محفوظة
+                if (!cachedScores) {
+                    container.innerHTML = `
+                        <div style="text-align: center; color: white; padding: 20px;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">⚠️</div>
+                            <div>تعذر الاتصال بالباك إند</div>
+                            <div style="font-size: 14px; margin-top: 10px; opacity: 0.8;">تأكد من تشغيل السيرفر على ${API_URL}</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // دالة لعرض قائمة المتصدرين
+        function displayWelcomeLeaderboard(allScores, container) {
+            if (allScores.length === 0) {
+                container.innerHTML = '<div style="text-align: center; color: white; padding: 20px;">لا توجد نتائج بعد. كن أول من يحقق نتيجة! 🌟</div>';
+                return;
+            }
+            
+            const trophies = ['💎', '🥇', '🥈'];
+            const rankClasses = ['diamond', 'gold', 'silver'];
+            
+            // عرض أفضل 10 فقط في الصفحة
+            container.innerHTML = allScores.slice(0, 10).map((item, index) => {
+                const rankClass = rankClasses[index] || '';
+                const trophy = trophies[index] || '🏅';
+                const date = new Date(item.date).toLocaleDateString('ar-EG', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                let awww = '';
+                if(index +1 == 1){
+                     awww = `<div class="welcome-leaderboard-item" style="
+    border: 1px #00fdff solid;
+">`
+                }else if(index +1 == 2){
+                     awww = `<div class="welcome-leaderboard-item" style="
+    border: 1px #ffd700 solid;
+">`}
+                else if(index +1 == 3){
+                     awww = `<div class="welcome-leaderboard-item" style="
+    border: 1px #c0c0c0 solid;  
+                ">`}else{
+                  awww = `<div class="welcome-leaderboard-item";  
+                ">`
+                }
+                return `
+                    ${awww}
+                        <div class="trophy-icon">${trophy}</div>
+                        <div class="welcome-rank ${rankClass}">#${index + 1}</div>
+                        <div class="welcome-user-info">
+                            <div class="welcome-user-name">${item.name}</div>
+                            <div class="welcome-user-date">${date}</div>
+                             <div class="welcome-score-badge">${item.nameText}</div>
+                        </div>
+                        <div class="welcome-score-badge">${item.score}/${item.totalQuestions} (${item.percentage}%)</div>
+                    </div>
+                `;
+            }).join('');
+            
+            // عرض عدد المتصدرين الإجمالي
+            if (allScores.length > 10) {
+                container.innerHTML += `
+                    <div style="text-align: center; color: white; padding: 15px; font-size: 14px;">
+                        📊 إجمالي عدد المتسابقين: ${allScores.length}
+                    </div>
+                `;
+            }
+        }
+        loadWelcomeLeaderboard()
+    </script>
+    
+</body>
+</html>
